@@ -7,7 +7,7 @@
 <meta name="description" content="Kathir S — Senior Product Designer. Turning complex industrial IoT systems into interfaces people can actually use.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#1a2238;          /* navy ink */
@@ -103,6 +103,35 @@
   .hero-photo img{
     width:100%;height:auto;display:block;
     border-radius:10px;
+  }
+  /* ---- hero intro: handwritten greeting + typed role ---- */
+  .hero-greet{
+    font-family:'Caveat',cursive;font-weight:600;
+    font-size:clamp(2rem,3.4vw,2.7rem);line-height:1;
+    color:var(--ink);margin-bottom:6px;
+  }
+  .hero-typed{
+    font-size:clamp(1rem,1.5vw,1.15rem);font-weight:300;
+    color:var(--ink-soft);margin-bottom:26px;min-height:1.6em;
+  }
+  .typed-text{
+    font-weight:500;color:var(--ink);
+    background-image:linear-gradient(var(--rotate-accent),var(--rotate-accent));
+    background-repeat:no-repeat;background-position:0 88%;
+    background-size:0% 32%;            /* highlight grows after typing */
+    transition:background-size .45s ease;
+    padding:0 1px;
+  }
+  .typed-text.lit{background-size:100% 32%;}
+  .typed-caret{
+    display:inline-block;width:2px;height:1.05em;
+    background:var(--ink);margin-left:2px;vertical-align:-2px;
+    animation:caret-blink 1s step-end infinite;
+  }
+  @keyframes caret-blink{50%{opacity:0;}}
+  @media(prefers-reduced-motion:reduce){
+    .typed-caret{animation:none;}
+    .typed-text{transition:none;}
   }
   .eyebrow{
     font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
@@ -351,6 +380,8 @@
 <header class="hero">
   <div class="wrap hero-grid">
     <div class="hero-text">
+      <p class="hero-greet reveal">Hi, I'm Kathir.</p>
+      <p class="hero-typed reveal">Teams call me <span class="typed" aria-label="a Product Designer, Product Thinker, Strategist, Problem Solver, Team Enabler, and UX Mentor"><span class="typed-text" aria-hidden="true"></span><span class="typed-caret" aria-hidden="true"></span></span></p>
       <div class="eyebrow reveal">Senior Product Designer</div>
       <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" role="text" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" aria-hidden="true" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
       <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
@@ -757,6 +788,47 @@
       });
     },{rootMargin:'-45% 0px -50% 0px'});   // fires when section crosses mid-viewport
     ids.forEach(id=>spy.observe(document.getElementById(id)));
+  })();
+
+  // hero typed-role effect — types, highlights, erases, cycles
+  (function(){
+    const wrap=document.querySelector('.typed-text');
+    if(!wrap)return;
+    const phrases=["Product Designer","Product Thinker","Strategist",
+                   "Problem Solver","Team Enabler","UX Mentor"];
+    const caret=document.querySelector('.typed-caret');
+    const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(reduce){
+      wrap.textContent=phrases[0];wrap.classList.add('lit');
+      if(caret)caret.style.display='none';
+      return;
+    }
+    let pi=0;
+    const type=(text,i)=>{
+      if(i<=text.length){
+        wrap.textContent=text.slice(0,i);
+        setTimeout(()=>type(text,i+1),55);
+      }else{
+        wrap.classList.add('lit');                 // highlight sweep
+        setTimeout(()=>erase(text),1500);          // hold
+      }
+    };
+    const erase=(text)=>{
+      wrap.classList.remove('lit');
+      setTimeout(()=>{
+        const del=(t)=>{
+          if(t>=0){
+            wrap.textContent=text.slice(0,t);
+            setTimeout(()=>del(t-1),28);
+          }else{
+            pi=(pi+1)%phrases.length;
+            setTimeout(()=>type(phrases[pi],0),220);
+          }
+        };
+        del(text.length);
+      },380);
+    };
+    setTimeout(()=>type(phrases[0],0),600);
   })();
 
   // hero word rotator
