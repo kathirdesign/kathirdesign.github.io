@@ -16,6 +16,7 @@
     --paper-2:#f3efe8;
     --line:#d8d2c6;         /* hairline */
     --accent:#1a2238;
+    --rotate-accent:#b8862f;   /* warm gold — echoes the case-study covers */
     --muted:#6b6f7d;
     --maxw:1080px;
   }
@@ -62,6 +63,23 @@
     max-width:14ch;
   }
   .hero h1 em{font-style:italic;font-weight:400;}
+  .rotator{
+    display:inline-flex;position:relative;
+    font-style:italic;font-weight:400;color:var(--rotate-accent);
+    white-space:nowrap;vertical-align:bottom;
+  }
+  .rotator::after{
+    content:"";position:absolute;left:0;right:0;bottom:.08em;
+    height:2px;background:var(--rotate-accent);opacity:.32;
+  }
+  .rw{
+    display:inline-block;white-space:nowrap;
+    transition:opacity .42s ease,transform .42s ease;
+  }
+  .rw.swap{opacity:0;transform:translateY(8px);}
+  @media(prefers-reduced-motion:reduce){
+    .rw{transition:none;}
+  }
   .hero-sub{
     margin-top:30px;font-size:1.1rem;color:var(--ink-soft);
     max-width:54ch;font-weight:300;
@@ -215,7 +233,7 @@
 <header class="hero">
   <div class="wrap">
     <div class="eyebrow reveal">Senior Product Designer</div>
-    <h1 class="reveal">Turning complex industrial systems into interfaces people can <em>actually use</em>.</h1>
+    <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
     <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
     <div class="hero-meta reveal">
       <span><i class="dot"></i>Bangalore, India</span>
@@ -464,6 +482,28 @@
 </footer>
 
 <script>
+  // hero word rotator
+  (function(){
+    const rw=document.querySelector('.rw');
+    if(!rw)return;
+    const words=JSON.parse(rw.dataset.words);
+    const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let i=0;
+    if(reduce){
+      // no motion: still cycle, but instant swap
+      setInterval(()=>{i=(i+1)%words.length;rw.textContent=words[i];},3000);
+      return;
+    }
+    setInterval(()=>{
+      rw.classList.add('swap');                 // fade + lift out
+      setTimeout(()=>{
+        i=(i+1)%words.length;
+        rw.textContent=words[i];
+        rw.classList.remove('swap');            // fade back in
+      },420);
+    },3000);
+  })();
+
   // staggered scroll reveal
   const els=document.querySelectorAll('.reveal');
   const io=new IntersectionObserver((entries)=>{
