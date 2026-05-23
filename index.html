@@ -7,7 +7,7 @@
 <meta name="description" content="Kathir S — Senior Product Designer. Turning complex industrial IoT systems into interfaces people can actually use.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#1a2238;          /* navy ink */
@@ -17,7 +17,7 @@
     --line:#d8d2c6;         /* hairline */
     --accent:#1a2238;
     --rotate-accent:#b8862f;   /* warm gold — echoes the case-study covers */
-    --muted:#6b6f7d;
+    --muted:#5c606e;
     --maxw:1080px;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
@@ -49,10 +49,61 @@
     transition:color .2s;
   }
   .nav-links a:hover{color:var(--ink);}
+  .nav-links a.active{
+    color:var(--ink);
+  }
+  .nav-links a.active::after{
+    content:"";display:block;height:2px;margin-top:4px;
+    background:var(--rotate-accent);
+  }
+  .nav-links a{position:relative;}
+
+  /* ---------- ACCESSIBILITY (WCAG 2.2 AA) ---------- */
+  /* 2.4.7 Focus Visible + 2.4.11 Focus Not Obscured + 2.4.13 Focus Appearance */
+  a:focus-visible,button:focus-visible,[tabindex]:focus-visible{
+    outline:3px solid var(--rotate-accent);
+    outline-offset:3px;
+    border-radius:2px;
+    scroll-margin-top:90px;            /* keeps focused item clear of sticky nav */
+  }
+  /* remove outline only for mouse users, keep for keyboard */
+  a:focus:not(:focus-visible){outline:none;}
+  /* 2.4.1 Bypass Blocks — skip link */
+  .skip-link{
+    position:absolute;left:16px;top:-60px;z-index:200;
+    background:var(--ink);color:var(--paper);
+    padding:10px 18px;font-size:.85rem;font-weight:500;
+    text-decoration:none;border-radius:0 0 4px 4px;
+    transition:top .18s ease;
+  }
+  .skip-link:focus{top:0;}
+  /* 2.3.3 Animation from Interactions — honour reduced motion globally */
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{transition:none;}
+    *{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+  }
+  /* 1.4.6 Enhanced contrast — strengthen hairlines for high-contrast users */
+  @media(prefers-contrast:more){
+    :root{--line:#9a9486;--muted:#3a3d48;}
+    a:focus-visible,button:focus-visible{outline-width:4px;}
+  }
   @media(max-width:640px){.nav-links{display:none;}}
 
   /* ---------- HERO ---------- */
-  .hero{padding:130px 0 96px;}
+  .hero{padding:118px 0 90px;}
+  .hero-grid{
+    display:grid;grid-template-columns:1.35fr 1fr;
+    gap:54px;align-items:center;
+  }
+  @media(max-width:820px){
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .hero-photo{order:-1;max-width:340px;}
+  }
+  .hero-photo img{
+    width:100%;height:auto;display:block;
+    border-radius:10px;
+  }
   .eyebrow{
     font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;
     color:var(--muted);font-weight:400;margin-bottom:28px;
@@ -89,6 +140,33 @@
     font-size:.85rem;color:var(--muted);letter-spacing:.03em;
   }
   .hero-meta span{display:flex;align-items:center;gap:8px;}
+
+  /* ---------- METRICS BANNER ---------- */
+  .metrics{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .metrics-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1px;background:var(--line);
+  }
+  .metric{
+    background:var(--paper);
+    padding:50px 24px;text-align:center;
+  }
+  .metric .m-num{
+    font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:clamp(3rem,5.8vw,4.4rem);line-height:1;
+    letter-spacing:-.02em;color:var(--ink);
+  }
+  .metric .m-num .m-suffix{
+    color:var(--rotate-accent);
+  }
+  .metric .m-label{
+    margin-top:16px;font-size:.78rem;font-weight:500;
+    letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  }
+  @media(max-width:760px){
+    .metrics-grid{grid-template-columns:1fr 1fr;}
+    .metric{padding:38px 16px;}
+  }
   .dot{width:5px;height:5px;border-radius:50%;background:var(--ink);}
 
   /* ---------- SECTION SCAFFOLD ---------- */
@@ -172,10 +250,31 @@
   .case-block{margin:48px 0;}
   .case-block h3{
     font-size:1.3rem;font-weight:600;margin-bottom:14px;
-    display:flex;align-items:baseline;gap:12px;
+    display:flex;align-items:center;gap:14px;
   }
   .case-block h3 .bn{font-size:.85rem;color:var(--muted);font-family:'Poppins';font-weight:400;}
+  .case-block h3 .h-icon{
+    flex:none;width:38px;height:38px;
+    border:1px solid var(--line);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--paper);
+  }
+  .case-block h3 .h-icon svg{width:19px;height:19px;stroke:var(--ink);}
   .case-block p{color:var(--ink-soft);max-width:64ch;margin-bottom:14px;}
+  .case-block .sub{
+    margin-top:24px;margin-bottom:6px;font-weight:600;
+    color:var(--ink);font-size:1rem;
+  }
+  .case-block ul{
+    max-width:64ch;margin:10px 0 14px;padding-left:0;list-style:none;
+  }
+  .case-block ul li{
+    color:var(--ink-soft);margin-bottom:9px;padding-left:20px;position:relative;
+  }
+  .case-block ul li::before{
+    content:"—";position:absolute;left:0;color:var(--rotate-accent);
+  }
+  .case-block ul li strong{color:var(--ink);font-weight:600;}
   .editable{
     background:#fdf6e3;border-left:3px solid #c9a227;
     padding:13px 16px;font-size:.88rem;color:#7a6420;
@@ -186,6 +285,21 @@
   /* ---------- CAPABILITIES ---------- */
   .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
   @media(max-width:760px){.cap-grid{grid-template-columns:1fr 1fr;}}
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px 56px;}
+  @media(max-width:760px){.skills-grid{grid-template-columns:1fr;gap:32px;}}
+  .skill-group h3{
+    font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);font-weight:500;margin-bottom:16px;
+    padding-bottom:12px;border-bottom:1px solid var(--line);
+  }
+  .skill-tags{display:flex;flex-wrap:wrap;gap:9px;}
+  .skill-tags span{
+    font-size:.88rem;font-weight:400;color:var(--ink);
+    border:1px solid var(--line);background:var(--paper-2);
+    padding:7px 14px;border-radius:6px;
+  }
   .cap{background:var(--paper);padding:26px 22px;}
   .cap .cap-n{font-size:.78rem;color:var(--muted);}
   .cap h3{font-size:1rem;font-weight:600;margin-top:6px;line-height:1.35;}
@@ -216,6 +330,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to main content</a>
+
 <nav>
   <div class="wrap nav-inner">
     <div class="logo">Kathir&nbsp;S</div>
@@ -229,19 +345,57 @@
   </div>
 </nav>
 
+<main id="main">
+
 <!-- ================= HERO ================= -->
 <header class="hero">
-  <div class="wrap">
-    <div class="eyebrow reveal">Senior Product Designer</div>
-    <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
-    <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
-    <div class="hero-meta reveal">
-      <span><i class="dot"></i>Bangalore, India</span>
-      <span><i class="dot"></i>8+ years experience</span>
-      <span><i class="dot"></i>Available for senior design roles</span>
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <div class="eyebrow reveal">Senior Product Designer</div>
+      <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" role="text" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" aria-hidden="true" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
+      <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
+      <div class="hero-meta reveal">
+        <span><i class="dot"></i>Bangalore, India</span>
+        <span><i class="dot"></i>8+ years experience</span>
+        <span><i class="dot"></i>Available for senior design roles</span>
+      </div>
+    </div>
+    <div class="hero-photo reveal">
+      <img src="kathir-portrait.png" alt="Kathir S — Senior Product Designer">
     </div>
   </div>
 </header>
+
+<!-- ================= METRICS BANNER ================= -->
+<section class="metrics" aria-label="Key metrics">
+  <div class="metrics-grid">
+    <div class="metric">
+      <div class="m-num" data-target="8" data-suffix="+">0</div>
+      <div class="m-label">Years of experience</div>
+    </div>
+    <!-- Verticals: 5 — matches the five named verticals in the AssetiQ case study. -->
+    <div class="metric">
+      <div class="m-num" data-target="5">0</div>
+      <div class="m-label">Verticals, one admin core</div>
+    </div>
+    <div class="metric">
+      <div class="m-num" data-target="95" data-suffix="%">0</div>
+      <div class="m-label">Easier onboarding</div>
+    </div>
+    <div class="metric">
+      <div class="m-num" data-target="60" data-suffix="%">0</div>
+      <div class="m-label">Faster configuration</div>
+    </div>
+    <div class="metric">
+      <div class="m-num" data-target="3" data-suffix="x">0</div>
+      <div class="m-label">ARR growth at AssetiQ</div>
+    </div>
+    <div class="metric">
+      <div class="m-num" data-target="75" data-suffix="%">0</div>
+      <div class="m-label">Fewer support tickets</div>
+    </div>
+  </div>
+</section>
 
 <!-- ================= ABOUT ================= -->
 <section id="about">
@@ -341,21 +495,30 @@
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">01</span> Context</h3>
-      <p>AssetiQ is a multi-tenant IoT SaaS platform serving five industrial verticals — LiftiQ, ReeferiQ, CloudiQ, TankiQ and FlowiQ — with enterprise end customers including Arkema, Fujifilm and ChampionX. Every tenant brings its own users, assets, hierarchies and access rules. The administration layer is the single surface where all of that is configured and controlled.</p>
-      <div class="editable"><strong>Add specifics:</strong> describe what the admin layer looked like when you arrived — was it new, inherited, or broken? One or two concrete sentences on the starting state.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span class="bn">01</span> Context</h3>
+      <p>AssetiQ is a multi-tenant IoT SaaS platform spanning five industrial verticals — LiftiQ, ReeferiQ, CloudiQ, TankiQ and FlowiQ — used by enterprise organizations to manage industrial assets, devices and field operations at scale.</p>
+      <p>When I took on the platform, administration didn't exist as one thing. Each vertical application carried its own separate admin system — its own design patterns, its own gaps, its own logic. An owner or admin responsible for more than one asset type had to move between several disconnected admin tools just to manage their own people and assets: different interfaces, missing features, no shared muscle memory. The result was constant friction — confused user management, inconsistent control, and onboarding that leaned heavily on Hash8's support team.</p>
+      <p>I saw that the real problem wasn't any single screen — it was the absence of a system. So I reframed the work: instead of improving five admin tools, design one. A single administration layer governing every application, every tenant and every asset type under one roof — and, critically, one built to absorb new applications as the platform grew, not just the five that existed then.</p>
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">02</span> The Challenge</h3>
-      <p>Multi-tenant administration carries a hard tension: it must be powerful enough for complex enterprise configuration, yet simple enough that an operator isn't lost in it. The interface has to scale across very different verticals without fragmenting into five disconnected experiences.</p>
-      <div class="editable"><strong>Add specifics:</strong> the sharpest 2–3 real problems you found — e.g. confusing role setup, error-prone asset assignment, slow onboarding of a new tenant. Concrete pain points an interviewer can probe.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"/><path d="M12 12v3"/></svg></span><span class="bn">02</span> The Challenge</h3>
+      <p>Multi-tenant administration sits on a hard tension: powerful enough for genuinely complex enterprise configuration, simple enough that an operator is never lost in it. Three problems made that especially hard here.</p>
+      <p class="sub">Fragmentation</p>
+      <p>Five separate admin systems meant five design languages, five mental models and no transferable knowledge. Managing a workforce and its assets across applications was genuinely painful — and customers had largely stopped expecting it to be otherwise.</p>
+      <p class="sub">Access at scale</p>
+      <p>In industrial IoT, visibility is not cosmetic — it is security. Who can see and act on which assets, accounts and entities had to be controlled precisely, across organizations ranging from a single flat team to large, arbitrarily deep hierarchies distributed worldwide. Designing access control that held up across that entire range was the hardest part of the work.</p>
+      <p class="sub">The unspoken pain</p>
+      <p>Customers couldn't always articulate what was wrong — they had adapted to the friction. The job wasn't to ask users what they wanted and build it; it was to identify the pain they couldn't name, design it out, and prevent the next one. Designing for the common denominator across every vertical, rather than any single request, was the only way there.</p>
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">03</span> My Role &amp; Approach</h3>
-      <p>As the only designer on the platform, I owned this end to end — from functional and requirement analysis, through interaction and interface design, to the handoff engineering built from. I worked the problem as a system: defining the structure first, then the screens.</p>
-      <div class="editable"><strong>Add specifics:</strong> your actual process — research method, who you talked to, how you mapped requirements, key design decisions and the reasoning behind each. This block is where senior judgement shows; make it the most detailed.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span><span class="bn">03</span> My Role &amp; Approach</h3>
+      <p>As the sole designer on AssetiQ, I owned the work end to end — functional and requirement analysis, interaction and interface design, prototyping, and the handoff engineering built from. I treat design as a system problem before a screen problem: define the structure, then draw.</p>
+      <p>My process starts with <em>why</em>. Before How or What, I dig into why a customer actually needs a capability — because designing on top of an unexamined "why" is how products accumulate expensive rework later. From there: customer research, Jobs-to-be-Done, user personas, and a deliberate habit of working the problem from the user's own standpoint.</p>
+      <p>I partnered closely with the CEO on product direction, distilled requirements down to their essentials, and reverse-engineered the key decisions from there. Concepts moved into low-fidelity wireframes — Whimsical, or quick sketches in Figma — then into review with a product manager, a UI developer and the CEO, where every detail was scrutinized before anything went high-fidelity.</p>
+      <p>High-fidelity design and prototyping followed, with design variants tested and critiqued inside the team and a red-team / blue-team critique pass to pressure-test the final direction. One rule held throughout: simplicity is the hard outcome, not the easy one — making something genuinely simple is harder than leaving it complex.</p>
+      <p>After handoff to UI and engineering, the work didn't stop. Post-release I ran usability testing, gathered real customer feedback, and validated usage and performance with product analytics — closing the loop and feeding the next iteration.</p>
     </div>
 
     <div class="screen-slot reveal">
@@ -364,9 +527,22 @@
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">04</span> The Solution</h3>
-      <p>The result was an administration experience built around a consistent model — so that configuring users, assets and access followed the same logic regardless of vertical or tenant.</p>
-      <div class="editable"><strong>Add specifics:</strong> walk through the final design — the key screens, the structural decisions that made it scale, what a user can now do quickly that was hard before.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span><span class="bn">04</span> The Solution</h3>
+      <p>The outcome was a single administration layer with one consistent model — so that configuring organizations, users, assets and access followed the same logic regardless of vertical or tenant.</p>
+      <p class="sub">One core, many applications</p>
+      <p>Five vertical applications sit on top of a single administration core. Everything they share lives in that core — organizations, accounts, asset groups, users and roles, plus the cross-cutting entities each application depends on. New applications can be added without redesigning administration; the structure was built to expand.</p>
+      <p class="sub">A role system that works out of the box</p>
+      <p>Rather than forcing every customer to configure their own roles, I designed a comprehensive set of default roles across four organization types — with a clean Owner / Admin / Member / Viewer pattern that repeats predictably at both organization and account level. Administration access is reserved for Owners and Admins; Members work within the applications themselves. This was a deliberate bet on convention over configuration: a default structure complete enough that most customers never need to customize it.</p>
+      <p class="sub">A hierarchy that flexes from flat to deep</p>
+      <p>Four primitives let customers model almost any organizational shape:</p>
+      <ul>
+        <li><strong>Organizations</strong> — the root level for a customer, where Owners and Admins sit with full control.</li>
+        <li><strong>Accounts</strong> — arbitrarily nested sub-levels for deeper structures.</li>
+        <li><strong>Asset Groups</strong> — exclusive sets of assets (an asset belongs to exactly one), placeable at organization or account level.</li>
+        <li><strong>Super Groups</strong> — inclusive sets of asset groups, used to grant access cleanly without duplicating assets.</li>
+      </ul>
+      <p>Geofences add an attribute-based layer on top — virtual map perimeters scoped to an organization or account, driving access rules for moving assets and field-service activity.</p>
+      <p>Together these primitives turn what is theoretically very complex — multi-tenant, hierarchical, RBAC and ABAC access — into something a customer can learn quickly and shape to their own needs. And because the administration layer was built as a modular, decomposable system rather than something hardcoded to AssetiQ, it can serve use cases well beyond it.</p>
     </div>
 
     <div class="screen-slot reveal">
@@ -375,9 +551,15 @@
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">05</span> Outcome</h3>
-      <p>Over my tenure the platform grew from roughly $60K to $200K+ in ARR while expanding across its five verticals — with the administration layer as the backbone holding multi-tenant operations together.</p>
-      <div class="editable"><strong>Add specifics:</strong> any design-specific outcome you can claim honestly — reduced configuration time, fewer support tickets, faster tenant onboarding, qualitative client feedback. If you have no hard metric, a credible qualitative result is fine. Do not invent numbers.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span class="bn">05</span> Outcome</h3>
+      <p>Over my time on the platform, AssetiQ grew from roughly $60K to $200K+ in ARR and expanded from a product into a platform — with the administration layer as the backbone holding multi-tenant operations together. Design was not the only driver of that growth, but it was a core one: the administration experience became a genuine differentiator in how the platform was sold and adopted.</p>
+      <p>The clearest signals were operational:</p>
+      <ul>
+        <li><strong>~60% less configuration time</strong> — setting up organizations, users and assets became dramatically faster.</li>
+        <li><strong>~75% fewer support tickets</strong> — customers who once depended on Hash8's support team could now self-serve.</li>
+        <li><strong>Near-autonomous onboarding</strong> — tenants and resellers could invite and stand up new customer organizations themselves, with little or no hands-on help. New organizations began appearing on the platform continuously, rather than as supported one-off events.</li>
+      </ul>
+      <p>Qualitatively, enterprise customers singled out the administration system specifically — noting they had not seen one that combined this level of sophistication with this much simplicity.</p>
     </div>
   </div>
 </section>
@@ -462,10 +644,80 @@
   </div>
 </section>
 
-<!-- ================= CONTACT ================= -->
+<!-- ================= SKILLS ================= -->
+<!-- DRAFT: seeded from the AssetiQ case study. Kathir to correct, prune, and complete. -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-label">04 — Skills</div>
+    <h2 class="reveal" style="margin-bottom:38px;max-width:24ch;">The toolkit behind the work.</h2>
+    <div class="skills-grid reveal">
+
+      <div class="skill-group">
+        <h3>Research &amp; Strategy</h3>
+        <div class="skill-tags">
+          <span>User Research</span>
+          <span>Jobs-to-be-Done</span>
+          <span>User Personas</span>
+          <span>Requirement Analysis</span>
+          <span>Functional Analysis</span>
+          <span>Product Strategy</span>
+          <span>Design Strategy</span>
+          <span>Problem Reframing</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Design Craft</h3>
+        <div class="skill-tags">
+          <span>UX Design</span>
+          <span>UI Design</span>
+          <span>Information Architecture</span>
+          <span>Interaction Design</span>
+          <span>Wireframing</span>
+          <span>Prototyping</span>
+          <span>Design Systems</span>
+          <span>Engineering Handoff</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Domain Expertise</h3>
+        <div class="skill-tags">
+          <span>Multi-tenant SaaS</span>
+          <span>Enterprise Software</span>
+          <span>Industrial IoT</span>
+          <span>RBAC &amp; ABAC Access Control</span>
+          <span>Complex Systems Design</span>
+          <span>Platform Design</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Process &amp; Validation</h3>
+        <div class="skill-tags">
+          <span>Design Critique</span>
+          <span>Usability Testing</span>
+          <span>Comparative Evaluation</span>
+          <span>Product Analytics</span>
+          <span>Cross-functional Collaboration</span>
+          <span>Design Leadership</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>Tools</h3>
+        <div class="skill-tags">
+          <span>Figma</span>
+          <span>Whimsical</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 <section id="contact" class="contact">
   <div class="wrap">
-    <div class="section-label">04 — Contact</div>
+    <div class="section-label">05 — Contact</div>
     <h2 class="reveal">Let's talk about complex products that need clearer design.</h2>
     <p class="reveal">Open to Senior Product Designer roles — Bangalore or remote. The fastest way to reach me is below.</p>
     <div class="contact-links reveal">
@@ -477,11 +729,36 @@
   </div>
 </section>
 
+</main>
+
 <footer>
   <div class="wrap">© 2026 Kathir S — Senior Product Designer. <span>Designed &amp; built by hand.</span></div>
 </footer>
 
 <script>
+  // scroll-spy — highlight nav link for the section currently in view
+  (function(){
+    const links=document.querySelectorAll('.nav-links a');
+    const map={};
+    links.forEach(l=>{
+      const id=l.getAttribute('href').slice(1);
+      const sec=document.getElementById(id);
+      if(sec)map[id]=l;
+    });
+    const ids=Object.keys(map);
+    if(!ids.length)return;
+    const spy=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          links.forEach(l=>{l.classList.remove('active');l.removeAttribute('aria-current');});
+          const l=map[e.target.id];
+          if(l){l.classList.add('active');l.setAttribute('aria-current','true');}
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});   // fires when section crosses mid-viewport
+    ids.forEach(id=>spy.observe(document.getElementById(id)));
+  })();
+
   // hero word rotator
   (function(){
     const rw=document.querySelector('.rw');
@@ -502,6 +779,33 @@
         rw.classList.remove('swap');            // fade back in
       },420);
     },3000);
+  })();
+
+  // metrics count-up — fires when banner scrolls into view
+  (function(){
+    const nums=document.querySelectorAll('.m-num');
+    if(!nums.length)return;
+    const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const run=(el)=>{
+      const target=parseInt(el.dataset.target,10);
+      const suffix=el.dataset.suffix||'';
+      if(reduce){el.innerHTML=target+(suffix?'<span class="m-suffix">'+suffix+'</span>':'');return;}
+      const dur=1400;const start=performance.now();
+      const tick=(now)=>{
+        const p=Math.min((now-start)/dur,1);
+        const eased=1-Math.pow(1-p,3);            // ease-out cubic
+        const val=Math.round(eased*target);
+        el.innerHTML=val+(suffix?'<span class="m-suffix">'+suffix+'</span>':'');
+        if(p<1)requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const mo=new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){run(e.target);mo.unobserve(e.target);}
+      });
+    },{threshold:.5});
+    nums.forEach(n=>mo.observe(n));
   })();
 
   // staggered scroll reveal
