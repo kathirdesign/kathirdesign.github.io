@@ -309,6 +309,40 @@
   }
   .screen-slot .ss-note{font-size:.8rem;max-width:42ch;}
   .screen-slot.in-card{border-left:1px solid var(--line);min-height:100%;}
+
+  /* ---------- CASE IMAGES + CAROUSEL ---------- */
+  .case-img{
+    width:100%;aspect-ratio:16/9;object-fit:cover;display:block;
+    border:1px solid var(--line);border-radius:8px;
+  }
+  .case-cover-img{
+    width:100%;aspect-ratio:16/9;object-fit:cover;display:block;
+  }
+  .carousel{position:relative;width:100%;}
+  .carousel-track{
+    position:relative;width:100%;aspect-ratio:16/9;
+    border:1px solid var(--line);border-radius:8px;overflow:hidden;
+  }
+  .carousel-track img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;opacity:0;transition:opacity .6s ease;
+  }
+  .carousel-track img.active{opacity:1;}
+  .carousel-dots{
+    display:flex;justify-content:center;gap:10px;margin-top:16px;
+  }
+  .carousel-dots button{
+    width:9px;height:9px;border-radius:50%;padding:0;
+    border:1px solid var(--muted);background:transparent;
+    cursor:pointer;transition:background .2s,border-color .2s,transform .2s;
+  }
+  .carousel-dots button.active{
+    background:var(--rotate-accent);border-color:var(--rotate-accent);
+    transform:scale(1.15);
+  }
+  @media(prefers-reduced-motion:reduce){
+    .carousel-track img{transition:none;}
+  }
   .card-cover{border-top:1px solid var(--line);overflow:hidden;display:block;background:var(--paper);}
   .card-cover img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;}
 
@@ -384,6 +418,54 @@
     font-size:.88rem;font-weight:400;color:var(--ink);
     border:1px solid var(--line);background:var(--paper-2);
     padding:7px 14px;border-radius:6px;
+  }
+
+  /* ---------- FRAMEWORKS MARQUEE ---------- */
+  .marquee-sec{
+    padding:74px 0;
+    border-top:1px solid var(--line);
+    background:var(--paper);
+    overflow:hidden;
+  }
+  .marquee-sec .section-label{margin-bottom:10px;}
+  .marquee-intro{
+    max-width:var(--maxw);margin:0 auto 36px;padding:0 32px;
+  }
+  .marquee-intro p{
+    font-family:'Lora',serif;font-size:1.15rem;color:var(--ink-soft);
+    max-width:52ch;
+  }
+  .marquee-rows{display:flex;flex-direction:column;gap:6px;}
+  .marquee-row{
+    display:flex;width:max-content;align-items:center;
+    gap:0;
+  }
+  .marquee-row.r1{animation:marquee-l 64s linear infinite;}
+  .marquee-row.r2{animation:marquee-r 72s linear infinite;}
+  .marquee-row.r3{animation:marquee-l 80s linear infinite;}
+  .marquee-sec:hover .marquee-row{animation-play-state:paused;}
+  .m-chip{
+    flex:none;
+    font-family:'Poppins',sans-serif;
+    font-size:.95rem;font-weight:300;letter-spacing:.04em;
+    color:#8a8d96;
+    padding:8px 24px;white-space:nowrap;
+  }
+  .m-chip::before{
+    content:"";display:inline-block;width:4px;height:4px;
+    border-radius:50%;background:var(--rotate-accent);
+    margin-right:24px;vertical-align:middle;
+  }
+  @keyframes marquee-l{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  @keyframes marquee-r{
+    from{transform:translateX(-50%);}
+    to{transform:translateX(0);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .marquee-row{animation:none!important;flex-wrap:wrap;width:auto;}
   }
   .cap{background:var(--paper);padding:26px 22px;}
   .cap .cap-n{font-size:.78rem;color:var(--muted);}
@@ -563,9 +645,8 @@
         </div>
         <a class="card-view" href="#geist">Read case study →</a>
       </div>
-      <div class="screen-slot in-card">
-        <div class="ss-title">Cover image slot</div>
-        <div class="ss-note">Geist case-study cover — 16:9, 1600×900px. Match the AssetiQ cover system: off-white, navy, single gold accent.</div>
+      <div class="card-cover">
+        <img src="geist-cover.png" alt="Geist Design System — case study cover">
       </div>
     </div>
   </div>
@@ -587,9 +668,14 @@
       <div class="fact"><div class="fact-k">Business impact</div><div class="fact-v">ARR $60K → $200K+</div></div>
     </div>
 
-    <div class="screen-slot reveal">
-      <div class="ss-title">Screen slot — Context / overview</div>
-      <div class="ss-note">A wide screen or annotated diagram showing the AssetiQ platform structure or the admin landing view.</div>
+    <div class="carousel reveal" data-carousel>
+      <div class="carousel-track">
+        <img src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1" class="active">
+        <img src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2">
+        <img src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3">
+        <img src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4">
+      </div>
+      <div class="carousel-dots"></div>
     </div>
 
     <div class="case-block reveal">
@@ -619,9 +705,12 @@
       <p>After handoff to UI and engineering, the work didn't stop. Post-release I ran usability testing, gathered real customer feedback, and validated usage and performance with product analytics — closing the loop and feeding the next iteration.</p>
     </div>
 
-    <div class="screen-slot reveal">
-      <div class="ss-title">Screen slot — Process / artefacts</div>
-      <div class="ss-note">Flows, IA maps, wireframes or iteration shots. 2–3 images work well here. Anonymize any tenant data.</div>
+    <div class="carousel reveal" data-carousel>
+      <div class="carousel-track">
+        <img src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1" class="active">
+        <img src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2">
+      </div>
+      <div class="carousel-dots"></div>
     </div>
 
     <div class="case-block reveal">
@@ -643,9 +732,12 @@
       <p>Together these primitives turn what is theoretically very complex — multi-tenant, hierarchical, RBAC and ABAC access — into something a customer can learn quickly and shape to their own needs. And because the administration layer was built as a modular, decomposable system rather than something hardcoded to AssetiQ, it can serve use cases well beyond it.</p>
     </div>
 
-    <div class="screen-slot reveal">
-      <div class="ss-title">Screen slot — Final designs</div>
-      <div class="ss-note">The polished hero shots — the screens you're proudest of. This is the section recruiters study most. 2–4 images.</div>
+    <div class="carousel reveal" data-carousel>
+      <div class="carousel-track">
+        <img src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1" class="active">
+        <img src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2">
+      </div>
+      <div class="carousel-dots"></div>
     </div>
 
     <div class="case-block reveal">
@@ -678,9 +770,8 @@
       <div class="fact"><div class="fact-k">Shipped on</div><div class="fact-v">CloudiQ — production</div></div>
     </div>
 
-    <div class="screen-slot reveal">
-      <div class="ss-title">Screen slot — Component overview</div>
-      <div class="ss-note">A grid or board view of Geist components from your Figma library. Strong visual opener for this study.</div>
+    <div class="reveal">
+      <img src="geist-components.png" alt="Geist — component library overview" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -702,9 +793,8 @@
       <p>The key decision was scope. Under the deadline, I deliberately built Geist to component-and-variation level rather than a full token architecture. That was a time-constrained build strategy, not a compromise: get a reliable, well-structured component library into real product first, prove its value in production, and mature it into a fully tokenized system once it had earned its place. Shipping a real foundation beats holding out for a perfect one.</p>
     </div>
 
-    <div class="screen-slot reveal">
-      <div class="ss-title">Screen slot — Library structure</div>
-      <div class="ss-note">Figma library organization, component anatomy, variants. Shows systems thinking. 2–3 images.</div>
+    <div class="reveal">
+      <img src="geist-library.png" alt="Geist — Figma library structure and component anatomy" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -714,9 +804,8 @@
       <p>I used Geist to design the full CloudiQ mobile screens, then built an interactive prototype the team could open and use. The reaction was the milestone: people opening the prototype assumed they were using a real, working app — it took a few minutes of looking for tap targets to realise it wasn't. CloudiQ had reached production quality, on mobile, inside a compressed timeline.</p>
     </div>
 
-    <div class="screen-slot reveal">
-      <div class="ss-title">Screen slot — Geist in production (CloudiQ)</div>
-      <div class="ss-note">CloudiQ screens showing the components live in the shipped product. Proof it reached production.</div>
+    <div class="reveal">
+      <img src="geist-production.png" alt="Geist components live in the CloudiQ production app" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -814,6 +903,30 @@
         </div>
       </div>
 
+    </div>
+  </div>
+</section>
+
+<!-- ================= FRAMEWORKS MARQUEE ================= -->
+<!-- DRAFT: 31 frameworks as requested. Recommend curating to ~15-18 you can
+     defend in an interview — every chip here is a claim of applied mastery. -->
+<section class="marquee-sec" aria-label="Frameworks and thinking">
+  <div class="marquee-intro">
+    <div class="section-label">Frameworks &amp; Thinking</div>
+    <p>The strategic lenses I bring to the work — applied before, during, and after a product reaches the market.</p>
+  </div>
+  <div class="marquee-rows" aria-hidden="true">
+    <div class="marquee-row r1">
+      <span class="m-chip">Contrarian Theory</span><span class="m-chip">Branding</span><span class="m-chip">Pricing Strategy</span><span class="m-chip">Color Psychology</span><span class="m-chip">Social Proofing</span><span class="m-chip">SWOT Analysis</span><span class="m-chip">Blue Ocean Methodologies</span><span class="m-chip">USP Analysis</span><span class="m-chip">Thought Leadership</span><span class="m-chip">Cost Leadership</span><span class="m-chip">Differentiation Leadership</span>
+      <span class="m-chip">Contrarian Theory</span><span class="m-chip">Branding</span><span class="m-chip">Pricing Strategy</span><span class="m-chip">Color Psychology</span><span class="m-chip">Social Proofing</span><span class="m-chip">SWOT Analysis</span><span class="m-chip">Blue Ocean Methodologies</span><span class="m-chip">USP Analysis</span><span class="m-chip">Thought Leadership</span><span class="m-chip">Cost Leadership</span><span class="m-chip">Differentiation Leadership</span>
+    </div>
+    <div class="marquee-row r2">
+      <span class="m-chip">Inbound Marketing</span><span class="m-chip">Value Proposition</span><span class="m-chip">Value Innovation</span><span class="m-chip">Network Effect</span><span class="m-chip">BCG Matrix</span><span class="m-chip">Kano Model</span><span class="m-chip">Domino Effect</span><span class="m-chip">Leapfrogging</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Second-Order Thinking</span>
+      <span class="m-chip">Inbound Marketing</span><span class="m-chip">Value Proposition</span><span class="m-chip">Value Innovation</span><span class="m-chip">Network Effect</span><span class="m-chip">BCG Matrix</span><span class="m-chip">Kano Model</span><span class="m-chip">Domino Effect</span><span class="m-chip">Leapfrogging</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Second-Order Thinking</span>
+    </div>
+    <div class="marquee-row r3">
+      <span class="m-chip">Pareto Principle</span><span class="m-chip">Start With Why</span><span class="m-chip">Radical Candor</span><span class="m-chip">Atomic Design</span><span class="m-chip">Buyer Personas</span><span class="m-chip">Category Creation</span><span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">Blitzscaling</span><span class="m-chip">Nail It, Scale It</span><span class="m-chip">McKinsey 7S Model</span>
+      <span class="m-chip">Pareto Principle</span><span class="m-chip">Start With Why</span><span class="m-chip">Radical Candor</span><span class="m-chip">Atomic Design</span><span class="m-chip">Buyer Personas</span><span class="m-chip">Category Creation</span><span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">Blitzscaling</span><span class="m-chip">Nail It, Scale It</span><span class="m-chip">McKinsey 7S Model</span>
     </div>
   </div>
 </section>
@@ -922,6 +1035,48 @@
         rw.classList.remove('swap');            // fade back in
       },420);
     },3000);
+  })();
+
+  // reusable image carousel — autoplay 3s, clickable dots, swipe
+  (function(){
+    const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    document.querySelectorAll('[data-carousel]').forEach(car=>{
+      const imgs=Array.from(car.querySelectorAll('.carousel-track img'));
+      const dotWrap=car.querySelector('.carousel-dots');
+      if(imgs.length<2){if(dotWrap)dotWrap.remove();return;}
+      let idx=0,timer=null;
+      // build dots
+      imgs.forEach((_,i)=>{
+        const b=document.createElement('button');
+        b.type='button';
+        b.setAttribute('aria-label','Show image '+(i+1));
+        if(i===0)b.classList.add('active');
+        b.addEventListener('click',()=>{show(i);restart();});
+        dotWrap.appendChild(b);
+      });
+      const dots=Array.from(dotWrap.children);
+      function show(n){
+        idx=(n+imgs.length)%imgs.length;
+        imgs.forEach((im,i)=>im.classList.toggle('active',i===idx));
+        dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+      }
+      function next(){show(idx+1);}
+      function start(){if(!reduce)timer=setInterval(next,3000);}
+      function stop(){if(timer)clearInterval(timer);}
+      function restart(){stop();start();}
+      car.addEventListener('mouseenter',stop);
+      car.addEventListener('mouseleave',start);
+      // swipe
+      let x0=null;
+      car.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+      car.addEventListener('touchend',e=>{
+        if(x0===null)return;
+        const dx=e.changedTouches[0].clientX-x0;
+        if(Math.abs(dx)>40){show(dx<0?idx+1:idx-1);restart();}
+        x0=null;
+      },{passive:true});
+      start();
+    });
   })();
 
   // metrics count-up — fires when banner scrolls into view
