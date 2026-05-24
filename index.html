@@ -97,8 +97,62 @@
     gap:54px;align-items:center;
   }
   @media(max-width:820px){
-    .hero-grid{grid-template-columns:1fr;gap:40px;}
-    .hero-photo{order:-1;max-width:340px;}
+    .hero-grid{display:flex;flex-direction:column;gap:30px;}
+    .hero-text{display:contents;}      /* flatten so photo can sit between intro and body */
+    .hero-intro{order:1;}
+    .hero-photo{order:2;align-self:center;max-width:330px;}
+    .scroll-cue{order:3;}
+    .hero-body{order:4;}
+  }
+  /* scroll-down cue — mobile only — gold radiating pulse */
+  .scroll-cue{display:none;}
+  @media(max-width:820px){
+    .scroll-cue{
+      display:flex;align-items:center;justify-content:center;
+      width:46px;height:46px;margin:14px auto 0;align-self:center;
+      border-radius:50%;
+      color:var(--rotate-accent);background:var(--paper);
+      position:relative;isolation:isolate;
+    }
+    .scroll-cue svg{width:20px;height:20px;position:relative;z-index:3;
+      animation:cue-nudge 1.8s ease-in-out infinite;}
+    /* the button's own opaque face — sits ABOVE the glow,
+       physically covering the inner part so diffusion shows only outside */
+    .scroll-cue .cue-face{
+      position:absolute;inset:0;border-radius:50%;z-index:2;
+      background:var(--paper);
+    }
+    /* layer 1 — crisp expanding ring */
+    .scroll-cue::before{
+      content:"";position:absolute;inset:-2px;border-radius:50%;z-index:1;
+      border:1px solid var(--rotate-accent);
+      animation:cue-ring 2s ease-out infinite;
+    }
+    /* layer 2 — soft diffused gold glow (behind the face) */
+    .scroll-cue::after{
+      content:"";position:absolute;inset:2px;border-radius:50%;z-index:0;
+      background:var(--rotate-accent);
+      box-shadow:0 0 20px 8px rgba(184,134,47,.5);
+      animation:cue-glow 2s ease-out infinite;
+    }
+  }
+  @keyframes cue-ring{
+    0%{transform:scale(1);opacity:.4;}
+    100%{transform:scale(2.4);opacity:0;}
+  }
+  @keyframes cue-glow{
+    0%{transform:scale(1);opacity:.55;}
+    70%{opacity:.16;}
+    100%{transform:scale(2);opacity:0;}
+  }
+  @keyframes cue-nudge{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(3px);}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .scroll-cue::before{animation:none;opacity:0;}
+    .scroll-cue::after{animation:none;opacity:0;}
+    .scroll-cue svg{animation:none;}
   }
   .hero-photo img{
     width:100%;height:auto;display:block;
@@ -288,7 +342,7 @@
     display:flex;align-items:center;justify-content:center;
     background:var(--paper);
   }
-  .case-block h3 .h-icon svg{width:19px;height:19px;stroke:var(--ink);}
+  .case-block h3 .h-icon svg{width:19px;height:19px;stroke:var(--rotate-accent);}
   .case-block p{color:var(--ink-soft);max-width:64ch;margin-bottom:14px;}
   .case-block .sub{
     margin-top:24px;margin-bottom:6px;font-weight:600;
@@ -380,20 +434,28 @@
 <header class="hero">
   <div class="wrap hero-grid">
     <div class="hero-text">
-      <p class="hero-greet reveal">Hi, I'm Kathir.</p>
-      <p class="hero-typed reveal">Teams call me <span class="typed" aria-label="a Product Designer, Product Thinker, Strategist, Problem Solver, Team Enabler, and UX Mentor"><span class="typed-text" aria-hidden="true"></span><span class="typed-caret" aria-hidden="true"></span></span></p>
-      <div class="eyebrow reveal">Senior Product Designer</div>
-      <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" role="text" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" aria-hidden="true" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
-      <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
-      <div class="hero-meta reveal">
-        <span><i class="dot"></i>Bangalore, India</span>
-        <span><i class="dot"></i>8+ years experience</span>
-        <span><i class="dot"></i>Available for senior design roles</span>
+      <div class="hero-intro">
+        <p class="hero-greet reveal">Hi, I'm Kathir.</p>
+        <p class="hero-typed reveal">Teams call me <span class="typed" aria-label="a Product Designer, Product Thinker, Strategist, Problem Solver, Team Enabler, and UX Mentor"><span class="typed-text" aria-hidden="true"></span><span class="typed-caret" aria-hidden="true"></span></span></p>
+      </div>
+      <div class="hero-body">
+        <div class="eyebrow reveal">Senior Product Designer</div>
+        <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" role="text" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" aria-hidden="true" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
+        <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
+        <div class="hero-meta reveal">
+          <span><i class="dot"></i>Bangalore, India</span>
+          <span><i class="dot"></i>8+ years experience</span>
+          <span><i class="dot"></i>Available for senior design roles</span>
+        </div>
       </div>
     </div>
     <div class="hero-photo reveal">
       <img src="kathir-portrait.png" alt="Kathir S — Senior Product Designer">
     </div>
+    <a class="scroll-cue" href="#about" aria-label="Scroll down to content">
+      <span class="cue-face" aria-hidden="true"></span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+    </a>
   </div>
 </header>
 
@@ -617,20 +679,22 @@
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">01</span> Context</h3>
-      <p>AssetiQ's verticals were each evolving their own mobile patterns. Without a shared foundation, every new screen meant re-deciding the basics — and consistency drifted vertical by vertical. Geist began as the answer to that drift: a common component library for mobile, across iOS and Android.</p>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span class="bn">01</span> Context</h3>
+      <p>CloudiQ was set to be the first AssetiQ application to launch on mobile — the App Store and Google Play. Mobile is a different design problem from web: touch instead of keyboard and mouse, smaller canvas, different ergonomics. Without a shared foundation, every new mobile screen would mean re-deciding the basics, and consistency would drift screen by screen.</p>
+      <p>Geist began as the answer to that drift — a common component library for mobile, built across iOS and Android, with CloudiQ as its first home.</p>
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">02</span> The Challenge</h3>
-      <p>I was a design function of one. Building shared infrastructure usually takes a team; I had to scope Geist to what one person could realistically build, maintain, and actually get adopted — without it becoming a half-finished system that no one trusted.</p>
-      <div class="editable"><strong>Add specifics:</strong> the real constraints — time, no design team, engineering bandwidth, competing priorities. Honesty here reads as senior judgement, not weakness.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"/><path d="M12 12v3"/></svg></span><span class="bn">02</span> The Challenge</h3>
+      <p>The brief was to make CloudiQ feel genuinely top-tier on mobile — and to ship it fast. A design system was not part of the plan; CloudiQ was being rushed to launch, and building foundational infrastructure was seen as a detour.</p>
+      <p>I disagreed, on judgement. Launching a mobile product with no system would generate design debt the team could never realistically unwind later — every screen built on sand. So I made a call: build the system anyway, in parallel, inside the deadline. I had competing work at the same time — AssetiQ web design, alignment meetings — so I built much of Geist in my own hours, at home, because I was convinced it would become the stable foundation the team would come to rely on. The challenge wasn't a lack of skill; it was delivering foundational infrastructure under a deadline that hadn't budgeted for it.</p>
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">03</span> My Role &amp; Approach</h3>
-      <p>I made a deliberate scoping call: build Geist at the component level first — a reliable, well-structured library of mobile components in Figma — rather than over-reaching for a full token architecture the team couldn't yet support. Get real components into real product, then mature the system from there.</p>
-      <div class="editable"><strong>Add specifics:</strong> how you built it — which components first and why, how you structured the Figma library, how you worked with engineering on adoption. The scoping decision is the senior story; explain the reasoning.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span><span class="bn">03</span> My Role &amp; Approach</h3>
+      <p>I built Geist on atomic design — atoms and base components first, then molecules, organisms, templates, and finally pages. The foundations came first: a text hierarchy meeting WCAG AA accessibility standards, then a full colour system covering every state — normal, info, warning, critical, disabled, highlight — then buttons, primary through secondary, and outward from there.</p>
+      <p>For the typeface, I tested several fonts for mobile legibility. Vercel's open-source <em>Geist</em> font came out the clear winner for small-screen interfaces — and the system took its name from it.</p>
+      <p>The key decision was scope. Under the deadline, I deliberately built Geist to component-and-variation level rather than a full token architecture. That was a time-constrained build strategy, not a compromise: get a reliable, well-structured component library into real product first, prove its value in production, and mature it into a fully tokenized system once it had earned its place. Shipping a real foundation beats holding out for a perfect one.</p>
     </div>
 
     <div class="screen-slot reveal">
@@ -639,9 +703,10 @@
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">04</span> The Solution</h3>
-      <p>Geist gave CloudiQ a consistent, reusable set of mobile components — a shared vocabulary that made the interface coherent and sped up the design of new screens.</p>
-      <div class="editable"><strong>Add specifics:</strong> what Geist actually contains, the components you're proudest of, and how it changed the way screens got built.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span><span class="bn">04</span> The Solution</h3>
+      <p>Geist gave CloudiQ a consistent, reusable set of mobile components — a shared vocabulary that made the interface coherent and sped up the design of every new screen.</p>
+      <p>A deliberate principle shaped it: mobile is not web on a smaller screen. AssetiQ's web product was data-dense by design. The mobile app had to be the opposite — not a flood of information, but fine-tuned insights and the action items that actually matter on the move, with timely push notifications for anything critical or time-sensitive. That distinction was built into the components from the ground up.</p>
+      <p>I used Geist to design the full CloudiQ mobile screens, then built an interactive prototype the team could open and use. The reaction was the milestone: people opening the prototype assumed they were using a real, working app — it took a few minutes of looking for tap targets to realise it wasn't. CloudiQ had reached production quality, on mobile, inside a compressed timeline.</p>
     </div>
 
     <div class="screen-slot reveal">
@@ -650,9 +715,10 @@
     </div>
 
     <div class="case-block reveal">
-      <h3><span class="bn">05</span> Outcome &amp; Honest Reflection</h3>
-      <p>Geist shipped into production on CloudiQ — the platform's most mature vertical. It is a component-level library, not yet a fully tokenized design system, and I'm clear-eyed about that: it's real, useful infrastructure with a defined next stage of maturity.</p>
-      <div class="editable"><strong>Add specifics:</strong> what you'd build next if you continued (tokens, more verticals), and what running a system solo taught you. A grounded reflection signals seniority more than an inflated claim.</div>
+      <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span class="bn">05</span> Outcome &amp; Honest Reflection</h3>
+      <p>Geist shipped into production on CloudiQ — the platform's most mature vertical — built from scratch with no prior design system, no design team, and a deadline that hadn't allowed for it. By estimate, it cut repetitive rework on mobile screens by around 80% and made design updates roughly four times faster to roll out, while strengthening how customers engaged with the product on mobile.</p>
+      <p>I'm clear-eyed about what Geist is: a robust component-and-variation library, not yet a fully tokenized design system. That was the right scope for the moment — and the deliberate next stage is a complete token architecture, extended beyond CloudiQ to the other verticals.</p>
+      <p>What building a system solo taught me: foundational work rarely arrives with permission or time attached. The judgement that matters is knowing which foundations are worth building anyway — and scoping them so they ship.</p>
     </div>
   </div>
 </section>
