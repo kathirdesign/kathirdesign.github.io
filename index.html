@@ -319,29 +319,61 @@
     width:100%;aspect-ratio:16/9;object-fit:cover;display:block;
   }
   .carousel{position:relative;width:100%;}
-  .carousel-track{
+  /* peek stage — main image centred, neighbours peeking at edges */
+  .carousel-stage{
     position:relative;width:100%;aspect-ratio:16/9;
-    border:1px solid var(--line);border-radius:8px;overflow:hidden;
+    overflow:hidden;border-radius:8px;
   }
-  .carousel-track img{
-    position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;opacity:0;transition:opacity .6s ease;
+  .carousel-viewport{
+    position:absolute;inset:0;
+    display:flex;align-items:center;
+    transition:transform .55s cubic-bezier(.4,0,.2,1);
   }
-  .carousel-track img.active{opacity:1;}
-  .carousel-dots{
-    display:flex;justify-content:center;gap:10px;margin-top:16px;
+  .carousel-slide{
+    flex:0 0 86%;             /* 86% width → 7% of each neighbour peeks */
+    margin:0 1%;
+    aspect-ratio:16/9;
   }
-  .carousel-dots button{
-    width:9px;height:9px;border-radius:50%;padding:0;
-    border:1px solid var(--muted);background:transparent;
-    cursor:pointer;transition:background .2s,border-color .2s,transform .2s;
+  .carousel-slide img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    border:1px solid var(--line);border-radius:8px;
+    opacity:.45;transition:opacity .45s ease;
   }
-  .carousel-dots button.active{
-    background:var(--rotate-accent);border-color:var(--rotate-accent);
-    transform:scale(1.15);
+  .carousel-slide.active img{opacity:1;}
+  /* arrows */
+  .carousel-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+    width:40px;height:40px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(250,248,244,.92);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;color:var(--ink);transition:background .2s,transform .2s;
+  }
+  .carousel-arrow:hover{background:var(--paper);transform:translateY(-50%) scale(1.08);}
+  .carousel-arrow.prev{left:8px;}
+  .carousel-arrow.next{right:8px;}
+  .carousel-arrow svg{width:18px;height:18px;}
+  /* filmstrip thumbnails */
+  .carousel-strip{
+    display:flex;gap:10px;margin-top:14px;
+    justify-content:center;flex-wrap:wrap;
+  }
+  .carousel-strip button{
+    flex:0 0 auto;width:92px;aspect-ratio:16/9;padding:0;
+    border:1px solid var(--line);border-radius:5px;overflow:hidden;
+    cursor:pointer;background:none;
+    opacity:.5;transition:opacity .2s,border-color .2s,transform .2s;
+  }
+  .carousel-strip button img{width:100%;height:100%;object-fit:cover;display:block;}
+  .carousel-strip button.active{
+    opacity:1;border-color:var(--rotate-accent);transform:translateY(-2px);
+  }
+  .carousel-strip button:hover{opacity:.85;}
+  @media(max-width:560px){
+    .carousel-slide{flex:0 0 90%;}
+    .carousel-strip button{width:68px;}
   }
   @media(prefers-reduced-motion:reduce){
-    .carousel-track img{transition:none;}
+    .carousel-viewport{transition:none;}
   }
   .card-cover{border-top:1px solid var(--line);overflow:hidden;display:block;background:var(--paper);}
   .card-cover img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;}
@@ -668,14 +700,18 @@
       <div class="fact"><div class="fact-k">Business impact</div><div class="fact-v">ARR $60K → $200K+</div></div>
     </div>
 
-    <div class="carousel reveal" data-carousel>
-      <div class="carousel-track">
-        <img src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1" class="active">
-        <img src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2">
-        <img src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3">
-        <img src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4">
+    <div class="carousel" data-carousel>
+      <div class="carousel-stage">
+        <div class="carousel-viewport">
+          <div class="carousel-slide active"><img src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1"></div>
+          <div class="carousel-slide"><img src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2"></div>
+          <div class="carousel-slide"><img src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3"></div>
+          <div class="carousel-slide"><img src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4"></div>
+        </div>
+        <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
       </div>
-      <div class="carousel-dots"></div>
+      <div class="carousel-strip"></div>
     </div>
 
     <div class="case-block reveal">
@@ -705,12 +741,16 @@
       <p>After handoff to UI and engineering, the work didn't stop. Post-release I ran usability testing, gathered real customer feedback, and validated usage and performance with product analytics — closing the loop and feeding the next iteration.</p>
     </div>
 
-    <div class="carousel reveal" data-carousel>
-      <div class="carousel-track">
-        <img src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1" class="active">
-        <img src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2">
+    <div class="carousel" data-carousel>
+      <div class="carousel-stage">
+        <div class="carousel-viewport">
+          <div class="carousel-slide active"><img src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1"></div>
+          <div class="carousel-slide"><img src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2"></div>
+        </div>
+        <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
       </div>
-      <div class="carousel-dots"></div>
+      <div class="carousel-strip"></div>
     </div>
 
     <div class="case-block reveal">
@@ -732,12 +772,16 @@
       <p>Together these primitives turn what is theoretically very complex — multi-tenant, hierarchical, RBAC and ABAC access — into something a customer can learn quickly and shape to their own needs. And because the administration layer was built as a modular, decomposable system rather than something hardcoded to AssetiQ, it can serve use cases well beyond it.</p>
     </div>
 
-    <div class="carousel reveal" data-carousel>
-      <div class="carousel-track">
-        <img src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1" class="active">
-        <img src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2">
+    <div class="carousel" data-carousel>
+      <div class="carousel-stage">
+        <div class="carousel-viewport">
+          <div class="carousel-slide active"><img src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1"></div>
+          <div class="carousel-slide"><img src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2"></div>
+        </div>
+        <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
       </div>
-      <div class="carousel-dots"></div>
+      <div class="carousel-strip"></div>
     </div>
 
     <div class="case-block reveal">
@@ -1037,45 +1081,68 @@
     },3000);
   })();
 
-  // reusable image carousel — autoplay 3s, clickable dots, swipe
+  // image carousel — peek view + filmstrip, autoplay 3s
   (function(){
     const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     document.querySelectorAll('[data-carousel]').forEach(car=>{
-      const imgs=Array.from(car.querySelectorAll('.carousel-track img'));
-      const dotWrap=car.querySelector('.carousel-dots');
-      if(imgs.length<2){if(dotWrap)dotWrap.remove();return;}
+      const viewport=car.querySelector('.carousel-viewport');
+      const slides=Array.from(car.querySelectorAll('.carousel-slide'));
+      const strip=car.querySelector('.carousel-strip');
+      const prev=car.querySelector('.carousel-arrow.prev');
+      const next=car.querySelector('.carousel-arrow.next');
+      if(slides.length<2)return;
       let idx=0,timer=null;
-      // build dots
-      imgs.forEach((_,i)=>{
+
+      // build filmstrip thumbnails
+      slides.forEach((sl,i)=>{
+        const src=sl.querySelector('img').getAttribute('src');
         const b=document.createElement('button');
         b.type='button';
-        b.setAttribute('aria-label','Show image '+(i+1));
+        b.setAttribute('aria-label','View image '+(i+1));
+        b.innerHTML='<img src="'+src+'" alt="">';
         if(i===0)b.classList.add('active');
-        b.addEventListener('click',()=>{show(i);restart();});
-        dotWrap.appendChild(b);
+        b.addEventListener('click',()=>{go(i);restart();});
+        strip.appendChild(b);
       });
-      const dots=Array.from(dotWrap.children);
-      function show(n){
-        idx=(n+imgs.length)%imgs.length;
-        imgs.forEach((im,i)=>im.classList.toggle('active',i===idx));
-        dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+      const thumbs=Array.from(strip.children);
+
+      function go(n){
+        idx=(n+slides.length)%slides.length;
+        // slide width = slide flex-basis (% of stage) + margins; measure live
+        const stage=car.querySelector('.carousel-stage').offsetWidth;
+        const slideW=slides[0].offsetWidth+ (slides[0].offsetWidth*0.02);
+        // centre the active slide within the stage
+        const offset=(stage-slides[0].offsetWidth)/2 - idx*slideW;
+        viewport.style.transform='translateX('+offset+'px)';
+        slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+        thumbs.forEach((t,i)=>t.classList.toggle('active',i===idx));
       }
-      function next(){show(idx+1);}
-      function start(){if(!reduce)timer=setInterval(next,3000);}
-      function stop(){if(timer)clearInterval(timer);}
+      function step(d){go(idx+d);}
+      function start(){if(!reduce){stop();timer=setInterval(()=>step(1),3000);}}
+      function stop(){if(timer){clearInterval(timer);timer=null;}}
       function restart(){stop();start();}
+
+      prev.addEventListener('click',()=>{step(-1);restart();});
+      next.addEventListener('click',()=>{step(1);restart();});
       car.addEventListener('mouseenter',stop);
       car.addEventListener('mouseleave',start);
+
       // swipe
       let x0=null;
-      car.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+      car.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;stop();},{passive:true});
       car.addEventListener('touchend',e=>{
         if(x0===null)return;
         const dx=e.changedTouches[0].clientX-x0;
-        if(Math.abs(dx)>40){show(dx<0?idx+1:idx-1);restart();}
-        x0=null;
+        if(Math.abs(dx)>40)step(dx<0?1:-1);
+        x0=null;restart();
       },{passive:true});
-      start();
+
+      // recalc position on resize
+      let rt=null;
+      window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>go(idx),120);});
+
+      // init after layout settles
+      requestAnimationFrame(()=>{go(0);start();});
     });
   })();
 
