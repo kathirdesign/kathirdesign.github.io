@@ -106,6 +106,8 @@
   }
   /* scroll-down cue — mobile only — gold radiating pulse */
   .scroll-cue{display:none;}
+  /* ===== SCROLL CUE TURNED OFF — to re-enable, delete the line below ===== */
+  .scroll-cue{display:none!important;}
   @media(max-width:820px){
     .scroll-cue{
       display:flex;align-items:center;justify-content:center;
@@ -452,10 +454,13 @@
     <div class="hero-photo reveal">
       <img src="kathir-portrait.png" alt="Kathir S — Senior Product Designer">
     </div>
+    <!-- SCROLL CUE TURNED OFF — to re-enable, uncomment this block AND remove the
+         ".scroll-cue{display:none!important;}" off-switch line in the CSS.
     <a class="scroll-cue" href="#about" aria-label="Scroll down to content">
       <span class="cue-face" aria-hidden="true"></span>
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
     </a>
+    -->
   </div>
 </header>
 
