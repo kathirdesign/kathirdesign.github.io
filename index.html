@@ -70,6 +70,19 @@
   }
   /* remove outline only for mouse users, keep for keyboard */
   a:focus:not(:focus-visible){outline:none;}
+  /* reading-progress bar */
+  .progress-bar{
+    position:fixed;top:0;left:0;height:3px;width:0%;
+    background:var(--rotate-accent);z-index:120;
+    transition:width .1s linear;
+  }
+  /* case-study one-line hook */
+  .case-hook{
+    font-size:1.02rem;font-weight:500;color:var(--ink);
+    margin:6px 0 4px;
+    padding-left:14px;border-left:3px solid var(--rotate-accent);
+    max-width:58ch;
+  }
   /* 2.4.1 Bypass Blocks — skip link */
   .skip-link{
     position:absolute;left:16px;top:-60px;z-index:200;
@@ -90,7 +103,46 @@
     :root{--line:#9a9486;--muted:#3a3d48;}
     a:focus-visible,button:focus-visible{outline-width:4px;}
   }
-  @media(max-width:640px){.nav-links{display:none;}}
+  /* hamburger toggle — hidden on desktop */
+  .nav-toggle{
+    display:none;width:42px;height:42px;padding:0;
+    background:none;border:none;cursor:pointer;
+    flex-direction:column;justify-content:center;align-items:center;gap:5px;
+  }
+  .nav-toggle span{
+    display:block;width:22px;height:2px;background:var(--ink);
+    border-radius:2px;transition:transform .28s ease,opacity .2s ease;
+  }
+  .nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .nav-toggle.open span:nth-child(2){opacity:0;}
+  .nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  /* slide-in mobile menu */
+  .mobile-menu{
+    display:none;flex-direction:column;
+    border-top:1px solid var(--line);
+    background:var(--paper);
+    max-height:0;overflow:hidden;
+    transition:max-height .32s ease;
+  }
+  .mobile-menu a{
+    text-decoration:none;color:var(--ink);
+    font-size:1rem;font-weight:400;
+    padding:16px 32px;border-bottom:1px solid var(--line);
+    transition:background .15s,color .15s;
+  }
+  .mobile-menu a:last-child{border-bottom:none;}
+  .mobile-menu a:hover,.mobile-menu a.active{
+    background:var(--paper-2);color:var(--ink);
+  }
+  .mobile-menu a.active{
+    box-shadow:inset 3px 0 0 var(--rotate-accent);
+  }
+  @media(max-width:640px){
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+    .mobile-menu{display:flex;}
+    .mobile-menu.open{max-height:340px;}
+  }
 
   /* ---------- HERO ---------- */
   .hero{padding:118px 0 90px;}
@@ -239,8 +291,11 @@
     color:var(--muted);font-weight:400;margin-bottom:10px;
   }
   .principle blockquote{
-    position:relative;margin:0 auto;max-width:20ch;
+    position:relative;margin:0 auto;max-width:30ch;
     padding-top:34px;
+  }
+  @media(max-width:560px){
+    .principle blockquote{max-width:18ch;}
   }
   .principle blockquote::before{
     content:"\201C";
@@ -462,6 +517,13 @@
   }
   .case-block h3 .h-icon svg{width:19px;height:19px;stroke:var(--rotate-accent);}
   .case-block p{color:var(--ink-soft);max-width:64ch;margin-bottom:14px;}
+  .case-pull{
+    margin:22px 0;padding:4px 0 4px 22px;
+    border-left:3px solid var(--rotate-accent);
+    font-family:'Lora',serif;font-weight:500;font-style:italic;
+    font-size:1.28rem;line-height:1.42;color:var(--ink);
+    max-width:50ch;
+  }
   .case-block .sub{
     margin-top:24px;margin-bottom:6px;font-weight:600;
     color:var(--ink);font-size:1rem;
@@ -578,6 +640,8 @@
 </head>
 <body>
 
+<div class="progress-bar" id="progressBar" aria-hidden="true"></div>
+
 <a class="skip-link" href="#main">Skip to main content</a>
 
 <nav>
@@ -590,6 +654,16 @@
       <a href="#geist">Geist</a>
       <a href="#contact">Contact</a>
     </div>
+    <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#assetiq">AssetiQ</a>
+    <a href="#geist">Geist</a>
+    <a href="#contact">Contact</a>
   </div>
 </nav>
 
@@ -750,6 +824,7 @@
     <div class="case-head reveal">
       <div class="case-kicker">Case Study 01 — Enterprise IoT SaaS</div>
       <h2>AssetiQ Administration</h2>
+      <p class="case-hook">How I unified five fragmented admin systems into one platform layer — built to scale with the company.</p>
       <p class="case-summary">The administration layer is where a multi-tenant platform either stays manageable or quietly becomes unmanageable. This is how I designed the control surface that holds AssetiQ together.</p>
     </div>
 
@@ -777,8 +852,9 @@
     <div class="case-block reveal">
       <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span><span class="bn">01</span> Context</h3>
       <p>AssetiQ is a multi-tenant IoT SaaS platform spanning five industrial verticals — LiftiQ, ReeferiQ, CloudiQ, TankiQ and FlowiQ — used by enterprise organizations to manage industrial assets, devices and field operations at scale.</p>
-      <p>When I took on the platform, administration didn't exist as one thing. Each vertical application carried its own separate admin system — its own design patterns, its own gaps, its own logic. An owner or admin responsible for more than one asset type had to move between several disconnected admin tools just to manage their own people and assets: different interfaces, missing features, no shared muscle memory. The result was constant friction — confused user management, inconsistent control, and onboarding that leaned heavily on Hash8's support team.</p>
-      <p>I saw that the real problem wasn't any single screen — it was the absence of a system. So I reframed the work: instead of improving five admin tools, design one. A single administration layer governing every application, every tenant and every asset type under one roof — and, critically, one built to absorb new applications as the platform grew, not just the five that existed then.</p>
+      <p>When I took on the platform, administration didn't exist as one thing. Each vertical application carried its own separate admin system — its own design patterns, its own gaps, its own logic. An owner or admin responsible for more than one asset type had to <b>move between several disconnected admin tools</b> just to manage their own people and assets: different interfaces, missing features, no shared muscle memory. The result was constant friction — confused user management, inconsistent control, and onboarding that leaned heavily on Hash8's support team.</p>
+      <p class="case-pull">The real problem wasn't any single screen — it was the absence of a system.</p>
+      <p>So I reframed the work: instead of improving five admin tools, <b>design one</b>. A single administration layer governing every application, every tenant and every asset type under one roof — and, critically, one built to <b>absorb new applications as the platform grew</b>, not just the five that existed then.</p>
     </div>
 
     <div class="case-block reveal">
@@ -789,13 +865,15 @@
       <p class="sub">Access at scale</p>
       <p>In industrial IoT, visibility is not cosmetic — it is security. Who can see and act on which assets, accounts and entities had to be controlled precisely, across organizations ranging from a single flat team to large, arbitrarily deep hierarchies distributed worldwide. Designing access control that held up across that entire range was the hardest part of the work.</p>
       <p class="sub">The unspoken pain</p>
-      <p>Customers couldn't always articulate what was wrong — they had adapted to the friction. The job wasn't to ask users what they wanted and build it; it was to identify the pain they couldn't name, design it out, and prevent the next one. Designing for the common denominator across every vertical, rather than any single request, was the only way there.</p>
+      <p>Customers couldn't always articulate what was wrong — they had adapted to the friction. The job wasn't to ask users what they wanted and build it; it was to <b>identify the pain they couldn't name</b>, design it out, and prevent the next one. Designing for the common denominator across every vertical, rather than any single request, was the only way there.</p>
+      <p class="case-pull">Designing for the pain users can't name — not just the features they ask for.</p>
     </div>
 
     <div class="case-block reveal">
       <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span><span class="bn">03</span> My Role &amp; Approach</h3>
-      <p>As the sole designer on AssetiQ, I owned the work end to end — functional and requirement analysis, interaction and interface design, prototyping, and the handoff engineering built from. I treat design as a system problem before a screen problem: define the structure, then draw.</p>
-      <p>My process starts with <em>why</em>. Before How or What, I dig into why a customer actually needs a capability — because designing on top of an unexamined "why" is how products accumulate expensive rework later. From there: customer research, Jobs-to-be-Done, user personas, and a deliberate habit of working the problem from the user's own standpoint.</p>
+      <p>As the sole designer on AssetiQ, I owned the work end to end — functional and requirement analysis, interaction and interface design, prototyping, and the handoff engineering built from. I treat design as a <b>system problem before a screen problem</b>: define the structure, then draw.</p>
+      <p class="case-pull">Define the structure first. The screens follow.</p>
+      <p>My process starts with <em>why</em>. Before How or What, I dig into why a customer actually needs a capability — because designing on top of an unexamined "why" is how products accumulate <b>expensive rework later</b>. From there: customer research, Jobs-to-be-Done, user personas, and a deliberate habit of working the problem from the user's own standpoint.</p>
       <p>I partnered closely with the CEO on product direction, distilled requirements down to their essentials, and reverse-engineered the key decisions from there. Concepts moved into low-fidelity wireframes — Whimsical, or quick sketches in Figma — then into review with a product manager, a UI developer and the CEO, where every detail was scrutinized before anything went high-fidelity.</p>
       <p>High-fidelity design and prototyping followed, with design variants tested and critiqued inside the team and a red-team / blue-team critique pass to pressure-test the final direction. One rule held throughout: simplicity is the hard outcome, not the easy one — making something genuinely simple is harder than leaving it complex.</p>
       <p>After handoff to UI and engineering, the work didn't stop. Post-release I ran usability testing, gathered real customer feedback, and validated usage and performance with product analytics — closing the loop and feeding the next iteration.</p>
@@ -819,7 +897,8 @@
       <p class="sub">One core, many applications</p>
       <p>Five vertical applications sit on top of a single administration core. Everything they share lives in that core — organizations, accounts, asset groups, users and roles, plus the cross-cutting entities each application depends on. New applications can be added without redesigning administration; the structure was built to expand.</p>
       <p class="sub">A role system that works out of the box</p>
-      <p>Rather than forcing every customer to configure their own roles, I designed a comprehensive set of default roles across four organization types — with a clean Owner / Admin / Member / Viewer pattern that repeats predictably at both organization and account level. Administration access is reserved for Owners and Admins; Members work within the applications themselves. This was a deliberate bet on convention over configuration: a default structure complete enough that most customers never need to customize it.</p>
+      <p>Rather than forcing every customer to configure their own roles, I designed a comprehensive set of default roles across four organization types — with a clean Owner / Admin / Member / Viewer pattern that repeats predictably at both organization and account level. Administration access is reserved for Owners and Admins; Members work within the applications themselves. This was a <b>deliberate bet on convention over configuration</b>: a default structure complete enough that most customers never need to customize it.</p>
+      <p class="case-pull">A default structure complete enough that most customers never need to configure it.</p>
       <p class="sub">A hierarchy that flexes from flat to deep</p>
       <p>Four primitives let customers model almost any organizational shape:</p>
       <ul>
@@ -853,7 +932,8 @@
         <li><strong>~75% fewer support tickets</strong> — customers who once depended on Hash8's support team could now self-serve.</li>
         <li><strong>Near-autonomous onboarding</strong> — tenants and resellers could invite and stand up new customer organizations themselves, with little or no hands-on help. New organizations began appearing on the platform continuously, rather than as supported one-off events.</li>
       </ul>
-      <p>Qualitatively, enterprise customers singled out the administration system specifically — noting they had not seen one that combined this level of sophistication with this much simplicity.</p>
+      <p class="case-pull">The administration experience became a reason the platform was chosen — not just a feature within it.</p>
+      <p>Qualitatively, enterprise customers singled out the administration system specifically — noting they had not seen one that combined <b>this level of sophistication with this much simplicity</b>.</p>
     </div>
   </div>
 </section>
@@ -864,6 +944,7 @@
     <div class="case-head reveal">
       <div class="case-kicker">Case Study 02 — Design System</div>
       <h2>Geist — A Component Library for CloudiQ</h2>
+      <p class="case-hook">How I built a mobile component library from scratch — solo, under deadline, and shipped it to production.</p>
       <p class="case-summary">Building shared design infrastructure as a one-person design function — and the honest story of taking it from zero to a real, shipped library on a live vertical.</p>
     </div>
 
@@ -887,14 +968,16 @@
     <div class="case-block reveal">
       <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v2c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1V9"/><path d="M12 12v3"/></svg></span><span class="bn">02</span> The Challenge</h3>
       <p>The brief was to make CloudiQ feel genuinely top-tier on mobile — and to ship it fast. A design system was not part of the plan; CloudiQ was being rushed to launch, and building foundational infrastructure was seen as a detour.</p>
-      <p>I disagreed, on judgement. Launching a mobile product with no system would generate design debt the team could never realistically unwind later — every screen built on sand. So I made a call: build the system anyway, in parallel, inside the deadline. I had competing work at the same time — AssetiQ web design, alignment meetings — so I built much of Geist in my own hours, at home, because I was convinced it would become the stable foundation the team would come to rely on. The challenge wasn't a lack of skill; it was delivering foundational infrastructure under a deadline that hadn't budgeted for it.</p>
+      <p>I disagreed, on judgement. Launching a mobile product with no system would generate <b>design debt the team could never realistically unwind later</b> — every screen built on sand. So I made a call: build the system anyway, in parallel, inside the deadline. I had competing work at the same time — AssetiQ web design, alignment meetings — so I built much of Geist in my own hours, at home, because I was convinced it would become the stable foundation the team would come to rely on. The challenge wasn't a lack of skill; it was <b>delivering foundational infrastructure under a deadline that hadn't budgeted for it</b>.</p>
+      <p class="case-pull">A design system wasn't in the plan. I built it anyway — because skipping it was a debt the team could never repay.</p>
     </div>
 
     <div class="case-block reveal">
       <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg></span><span class="bn">03</span> My Role &amp; Approach</h3>
       <p>I built Geist on atomic design — atoms and base components first, then molecules, organisms, templates, and finally pages. The foundations came first: a text hierarchy meeting WCAG AA accessibility standards, then a full colour system covering every state — normal, info, warning, critical, disabled, highlight — then buttons, primary through secondary, and outward from there.</p>
       <p>For the typeface, I tested several fonts for mobile legibility. Vercel's open-source <em>Geist</em> font came out the clear winner for small-screen interfaces — and the system took its name from it.</p>
-      <p>The key decision was scope. Under the deadline, I deliberately built Geist to component-and-variation level rather than a full token architecture. That was a time-constrained build strategy, not a compromise: get a reliable, well-structured component library into real product first, prove its value in production, and mature it into a fully tokenized system once it had earned its place. Shipping a real foundation beats holding out for a perfect one.</p>
+      <p>The key decision was scope. Under the deadline, I deliberately built Geist to <b>component-and-variation level</b> rather than a full token architecture. That was a time-constrained build strategy, not a compromise: get a reliable, well-structured component library into real product first, prove its value in production, and mature it into a fully tokenized system once it had earned its place.</p>
+      <p class="case-pull">Shipping a real foundation beats holding out for a perfect one.</p>
     </div>
 
     <div class="reveal">
@@ -904,8 +987,9 @@
     <div class="case-block reveal">
       <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span><span class="bn">04</span> The Solution</h3>
       <p>Geist gave CloudiQ a consistent, reusable set of mobile components — a shared vocabulary that made the interface coherent and sped up the design of every new screen.</p>
-      <p>A deliberate principle shaped it: mobile is not web on a smaller screen. AssetiQ's web product was data-dense by design. The mobile app had to be the opposite — not a flood of information, but fine-tuned insights and the action items that actually matter on the move, with timely push notifications for anything critical or time-sensitive. That distinction was built into the components from the ground up.</p>
-      <p>I used Geist to design the full CloudiQ mobile screens, then built an interactive prototype the team could open and use. The reaction was the milestone: people opening the prototype assumed they were using a real, working app — it took a few minutes of looking for tap targets to realise it wasn't. CloudiQ had reached production quality, on mobile, inside a compressed timeline.</p>
+      <p>A deliberate principle shaped it: <b>mobile is not web on a smaller screen</b>. AssetiQ's web product was data-dense by design. The mobile app had to be the opposite — not a flood of information, but fine-tuned insights and the action items that actually matter on the move, with timely push notifications for anything critical or time-sensitive. That distinction was built into the components from the ground up.</p>
+      <p class="case-pull">Mobile isn't web on a smaller screen — it's fine-tuned insight and action, not a flood of data.</p>
+      <p>I used Geist to design the full CloudiQ mobile screens, then built an interactive prototype the team could open and use. The reaction was the milestone: people opening the prototype <b>assumed they were using a real, working app</b> — it took a few minutes of looking for tap targets to realise it wasn't. CloudiQ had reached production quality, on mobile, inside a compressed timeline.</p>
     </div>
 
     <div class="reveal">
@@ -914,9 +998,9 @@
 
     <div class="case-block reveal">
       <h3><span class="h-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></span><span class="bn">05</span> Outcome &amp; Honest Reflection</h3>
-      <p>Geist shipped into production on CloudiQ — the platform's most mature vertical — built from scratch with no prior design system, no design team, and a deadline that hadn't allowed for it. By estimate, it cut repetitive rework on mobile screens by around 80% and made design updates roughly four times faster to roll out, while strengthening how customers engaged with the product on mobile.</p>
+      <p>Geist shipped into production on CloudiQ — the platform's most mature vertical — built from scratch with no prior design system, no design team, and a deadline that hadn't allowed for it. By estimate, it cut <b>repetitive rework on mobile screens by around 80%</b> and made design updates <b>roughly four times faster</b> to roll out, while strengthening how customers engaged with the product on mobile.</p>
       <p>I'm clear-eyed about what Geist is: a robust component-and-variation library, not yet a fully tokenized design system. That was the right scope for the moment — and the deliberate next stage is a complete token architecture, extended beyond CloudiQ to the other verticals.</p>
-      <p>What building a system solo taught me: foundational work rarely arrives with permission or time attached. The judgement that matters is knowing which foundations are worth building anyway — and scoping them so they ship.</p>
+      <p class="case-pull">Foundational work rarely arrives with permission or time attached — the judgement is knowing which foundations to build anyway.</p>
     </div>
   </div>
 </section>
@@ -1003,7 +1087,21 @@
         <h3>Tools</h3>
         <div class="skill-tags">
           <span>Figma</span>
+          <span>Adobe XD</span>
+          <span>Balsamiq</span>
+          <span>InVision</span>
+          <span>Marvel</span>
           <span>Whimsical</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h3>AI-Augmented</h3>
+        <div class="skill-tags">
+          <span>Claude</span>
+          <span>ChatGPT</span>
+          <span>Gemini</span>
+          <span>NotebookLM</span>
         </div>
       </div>
 
@@ -1051,31 +1149,55 @@
 </main>
 
 <footer>
-  <div class="wrap">© 2026 Kathir S — Senior Product Designer. <span>Designed &amp; built by self.</span></div>
+  <div class="wrap">© 2026 Kathir S — Senior Product Designer. <span>Designed &amp; built by hand.</span></div>
 </footer>
 
 <script>
   // scroll-spy — highlight nav link for the section currently in view
   (function(){
-    const links=document.querySelectorAll('.nav-links a');
+    const links=document.querySelectorAll('.nav-links a, .mobile-menu a');
     const map={};
     links.forEach(l=>{
       const id=l.getAttribute('href').slice(1);
-      const sec=document.getElementById(id);
-      if(sec)map[id]=l;
+      if(!map[id])map[id]=[];
+      if(document.getElementById(id))map[id].push(l);
     });
-    const ids=Object.keys(map);
+    const ids=Object.keys(map).filter(id=>document.getElementById(id));
     if(!ids.length)return;
     const spy=new IntersectionObserver((entries)=>{
       entries.forEach(e=>{
         if(e.isIntersecting){
           links.forEach(l=>{l.classList.remove('active');l.removeAttribute('aria-current');});
-          const l=map[e.target.id];
-          if(l){l.classList.add('active');l.setAttribute('aria-current','true');}
+          (map[e.target.id]||[]).forEach(l=>{
+            l.classList.add('active');l.setAttribute('aria-current','true');
+          });
         }
       });
-    },{rootMargin:'-45% 0px -50% 0px'});   // fires when section crosses mid-viewport
+    },{rootMargin:'-45% 0px -50% 0px'});
     ids.forEach(id=>spy.observe(document.getElementById(id)));
+  })();
+
+  // hamburger menu — open / close
+  (function(){
+    const btn=document.getElementById('navToggle');
+    const menu=document.getElementById('mobileMenu');
+    if(!btn||!menu)return;
+    const setOpen=(open)=>{
+      btn.classList.toggle('open',open);
+      menu.classList.toggle('open',open);
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      menu.setAttribute('aria-hidden',open?'false':'true');
+      btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    };
+    btn.addEventListener('click',()=>setOpen(!menu.classList.contains('open')));
+    // tapping a link closes the menu
+    menu.querySelectorAll('a').forEach(a=>{
+      a.addEventListener('click',()=>setOpen(false));
+    });
+    // close on Escape
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'&&menu.classList.contains('open'))setOpen(false);
+    });
   })();
 
   // hero typed-role effect — types, highlights, erases, cycles
@@ -1139,6 +1261,20 @@
         rw.classList.remove('swap');            // fade back in
       },420);
     },3000);
+  })();
+
+  // reading-progress bar
+  (function(){
+    const bar=document.getElementById('progressBar');
+    if(!bar)return;
+    const update=()=>{
+      const h=document.documentElement;
+      const max=h.scrollHeight-h.clientHeight;
+      bar.style.width=(max>0?(h.scrollTop/max)*100:0)+'%';
+    };
+    window.addEventListener('scroll',update,{passive:true});
+    window.addEventListener('resize',update);
+    update();
   })();
 
   // image carousel — peek view + filmstrip, autoplay 3s
