@@ -202,9 +202,9 @@
   }
   .hero h1 em{font-style:italic;font-weight:400;}
   .rotator{
-    display:inline-flex;position:relative;
+    display:block;position:relative;width:max-content;max-width:100%;
     font-style:italic;font-weight:400;color:var(--rotate-accent);
-    white-space:nowrap;vertical-align:bottom;
+    white-space:nowrap;margin-top:.12em;
   }
   .rotator::after{
     content:"";position:absolute;left:0;right:0;bottom:.08em;
@@ -415,10 +415,11 @@
   }
   .carousel-strip button:hover{opacity:.85;}
   @media(max-width:640px){
-    .carousel-slide{flex:0 0 90%;}
+    /* touch devices: full-width images, swipe to navigate.
+       No peek, no arrows — swipe + filmstrip handle it, and the
+       image gets the full screen width for legibility. */
+    .carousel-slide{flex:0 0 100%;margin:0;}
     .carousel-strip button{width:68px;}
-    /* arrows overlap the image on small screens —
-       swipe + filmstrip handle navigation on touch devices */
     .carousel-arrow{display:none;}
   }
   @media(prefers-reduced-motion:reduce){
@@ -604,7 +605,7 @@
       </div>
       <div class="hero-body">
         <div class="eyebrow reveal">Senior Product Designer</div>
-        <h1 class="reveal">Turning complex industrial systems into interfaces people can&nbsp;<span class="rotator" role="text" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" aria-hidden="true" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
+        <h1 class="reveal">Turning complex industrial systems into interfaces people can <span class="rotator" role="text" aria-label="trust, rely on, master, navigate, and actually use"><span class="rw" aria-hidden="true" data-words='["trust","rely on","master","navigate","actually use"]'>trust</span>.</span></h1>
         <p class="hero-sub reveal">Eight years designing for industrial IoT — where the user wears gloves, stands in the sun, and cannot afford to get it wrong. I own the full arc, from functional analysis to the shipped screen.</p>
         <div class="hero-meta reveal">
           <span><i class="dot"></i>Bangalore, India</span>
@@ -662,7 +663,7 @@
   <div class="wrap">
     <div class="p-label">Core Principle I Design By</div>
     <blockquote>
-      <q>People don't buy what you do; they buy why you do.</q>
+      <q>People don't buy what you do; they buy why you do it.</q>
       <cite class="p-cite">— Simon Sinek</cite>
     </blockquote>
   </div>
@@ -1167,11 +1168,14 @@
 
       function go(n){
         idx=(n+slides.length)%slides.length;
-        // slide width = slide flex-basis (% of stage) + margins; measure live
         const stage=car.querySelector('.carousel-stage').offsetWidth;
-        const slideW=slides[0].offsetWidth+ (slides[0].offsetWidth*0.02);
+        // real per-slide stride = distance between two slides' left edges
+        // (works for both the desktop peek margins and full-width mobile)
+        const stride=slides.length>1
+          ? slides[1].offsetLeft-slides[0].offsetLeft
+          : slides[0].offsetWidth;
         // centre the active slide within the stage
-        const offset=(stage-slides[0].offsetWidth)/2 - idx*slideW;
+        const offset=(stage-slides[0].offsetWidth)/2 - idx*stride;
         viewport.style.transform='translateX('+offset+'px)';
         slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
         thumbs.forEach((t,i)=>t.classList.toggle('active',i===idx));
