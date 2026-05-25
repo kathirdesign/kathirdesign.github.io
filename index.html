@@ -389,8 +389,9 @@
   .work-card p{font-size:.95rem;color:var(--ink-soft);margin-bottom:22px;}
   .tag-row{display:flex;flex-wrap:wrap;gap:8px;}
   .tag{
-    font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;
-    border:1px solid var(--line);padding:4px 11px;color:var(--muted);
+    font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;
+    border:1px solid var(--rotate-accent);padding:4px 11px;
+    color:var(--rotate-accent);font-weight:500;border-radius:3px;
   }
   .card-view{
     margin-top:24px;font-size:.84rem;letter-spacing:.08em;
@@ -549,6 +550,32 @@
   .cap-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
   @media(max-width:760px){.cap-grid{grid-template-columns:1fr 1fr;}}
 
+  /* ---------- MORE WORK GRID ---------- */
+  .work-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);
+  }
+  @media(max-width:860px){.work-grid{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.work-grid{grid-template-columns:1fr;}}
+  .work-item{
+    background:var(--paper);padding:30px 26px;
+    display:flex;flex-direction:column;gap:9px;
+    transition:background .2s;
+  }
+  .work-item:hover{background:var(--paper-2);}
+  .work-item .wi-tag{
+    font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--rotate-accent);font-weight:500;
+  }
+  .work-item h3{
+    font-family:'Lora',serif;font-size:1.16rem;font-weight:500;
+    color:var(--ink);line-height:1.3;
+  }
+  .work-item p{
+    font-family:'Lora',serif;font-style:italic;
+    font-size:.92rem;color:var(--ink-soft);line-height:1.5;
+  }
+
   /* ---------- SKILLS ---------- */
   .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:40px 56px;}
   @media(max-width:760px){.skills-grid{grid-template-columns:1fr;gap:32px;}}
@@ -689,7 +716,7 @@
       </div>
     </div>
     <div class="hero-photo reveal">
-      <img src="kathir-portrait.png" alt="Kathir S — Senior Product Designer">
+      <img decoding="async" src="kathir-portrait.png" alt="Kathir S — Senior Product Designer">
     </div>
     <!-- SCROLL CUE TURNED OFF — to re-enable, uncomment this block AND remove the
          ".scroll-cue{display:none!important;}" off-switch line in the CSS.
@@ -794,7 +821,7 @@
         <a class="card-view" href="#assetiq">Read case study →</a>
       </div>
       <div class="card-cover">
-        <img src="assetiq-cover.png" alt="AssetiQ Administration — case study cover">
+        <img decoding="async" src="assetiq-cover.png" alt="AssetiQ Administration — case study cover">
       </div>
     </div>
 
@@ -812,7 +839,7 @@
         <a class="card-view" href="#geist">Read case study →</a>
       </div>
       <div class="card-cover">
-        <img src="geist-cover.png" alt="Geist Design System — case study cover">
+        <img decoding="async" src="geist-cover.png" alt="Geist Design System — case study cover">
       </div>
     </div>
   </div>
@@ -838,10 +865,10 @@
     <div class="carousel" data-carousel>
       <div class="carousel-stage">
         <div class="carousel-viewport">
-          <div class="carousel-slide active"><img src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1"></div>
-          <div class="carousel-slide"><img src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2"></div>
-          <div class="carousel-slide"><img src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3"></div>
-          <div class="carousel-slide"><img src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4"></div>
+          <div class="carousel-slide active"><img loading="lazy" decoding="async" src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1"></div>
+          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2"></div>
+          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3"></div>
+          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4"></div>
         </div>
         <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -882,8 +909,8 @@
     <div class="carousel" data-carousel>
       <div class="carousel-stage">
         <div class="carousel-viewport">
-          <div class="carousel-slide active"><img src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1"></div>
-          <div class="carousel-slide"><img src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2"></div>
+          <div class="carousel-slide active"><img loading="lazy" decoding="async" src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1"></div>
+          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2"></div>
         </div>
         <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -914,8 +941,8 @@
     <div class="carousel" data-carousel>
       <div class="carousel-stage">
         <div class="carousel-viewport">
-          <div class="carousel-slide active"><img src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1"></div>
-          <div class="carousel-slide"><img src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2"></div>
+          <div class="carousel-slide active"><img loading="lazy" decoding="async" src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1"></div>
+          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2"></div>
         </div>
         <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -956,7 +983,7 @@
     </div>
 
     <div class="reveal">
-      <img src="geist-components.png" alt="Geist — component library overview" class="case-img">
+      <img loading="lazy" decoding="async" src="geist-components.png" alt="Geist — component library overview" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -981,7 +1008,7 @@
     </div>
 
     <div class="reveal">
-      <img src="geist-library.png" alt="Geist — Figma library structure and component anatomy" class="case-img">
+      <img loading="lazy" decoding="async" src="geist-library.png" alt="Geist — Figma library structure and component anatomy" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -993,7 +1020,7 @@
     </div>
 
     <div class="reveal">
-      <img src="geist-production.png" alt="Geist components live in the CloudiQ production app" class="case-img">
+      <img loading="lazy" decoding="async" src="geist-production.png" alt="Geist components live in the CloudiQ production app" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -1001,6 +1028,62 @@
       <p>Geist shipped into production on CloudiQ — the platform's most mature vertical — built from scratch with no prior design system, no design team, and a deadline that hadn't allowed for it. By estimate, it cut <b>repetitive rework on mobile screens by around 80%</b> and made design updates <b>roughly four times faster</b> to roll out, while strengthening how customers engaged with the product on mobile.</p>
       <p>I'm clear-eyed about what Geist is: a robust component-and-variation library, not yet a fully tokenized design system. That was the right scope for the moment — and the deliberate next stage is a complete token architecture, extended beyond CloudiQ to the other verticals.</p>
       <p class="case-pull">Foundational work rarely arrives with permission or time attached — the judgement is knowing which foundations to build anyway.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MORE WORK ================= -->
+<section id="more-work">
+  <div class="wrap">
+    <div class="section-label">More Work</div>
+    <h2 class="reveal" style="margin-bottom:14px;max-width:20ch;">The broader body of work.</h2>
+    <p class="reveal" style="color:var(--ink-soft);max-width:58ch;margin-bottom:40px;">Beyond the two deep-dives above — selected projects from eight years across platform design, design systems, and product strategy.</p>
+    <div class="work-grid reveal">
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · AssetiQ</div>
+        <h3>Cross-Organization Asset Sharing</h3>
+        <p>Trust, scoped and revocable — collaboration without compromising control.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · AssetiQ</div>
+        <h3>Map Tracking &amp; Geofence Management</h3>
+        <p>Where location becomes logic — boundaries drawn, dropped, or defined.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · AssetiQ</div>
+        <h3>Platform Application Dashboards</h3>
+        <p>Signal over noise — decisions surfaced the moment you land.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · AssetiQ</div>
+        <h3>Digital Twin Framework</h3>
+        <p>Mirror the field. Master the outcome — before reality forces the decision.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · AssetiQ</div>
+        <h3>Intelligent Notification System</h3>
+        <p>More signal. Less noise. Right audience — every alert, earned.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · AssetiQ</div>
+        <h3>Platform-Wide Supporting Features</h3>
+        <p>The quiet surfaces that make a platform feel alive.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8 · TGSIN</div>
+        <h3>Smart Factory Operations Platform</h3>
+        <p>The factory, made legible — from blueprint to bottleneck.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Teezle</div>
+        <h3>Blue Bird School Bus Management Portal</h3>
+        <p>Mission-critical fleets, made manageable — for the operators behind the wheel.</p>
+      </article>
+      <article class="work-item">
+        <div class="wi-tag">Hash8</div>
+        <h3>Product Design Mentorship &amp; Team Enablement</h3>
+        <p>Building product thinkers — not just product doers.</p>
+      </article>
     </div>
   </div>
 </section>
@@ -1088,10 +1171,11 @@
         <div class="skill-tags">
           <span>Figma</span>
           <span>Adobe XD</span>
+          <span>Whimsical</span>
           <span>Balsamiq</span>
           <span>InVision</span>
           <span>Marvel</span>
-          <span>Whimsical</span>
+          <span>Notion</span>
         </div>
       </div>
 
