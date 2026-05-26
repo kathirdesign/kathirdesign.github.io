@@ -331,6 +331,18 @@
     font-family:'Poppins',sans-serif;font-weight:400;
     font-size:.85rem;letter-spacing:.06em;color:var(--muted);
   }
+  /* secondary "carried" principle — quieter than the core one */
+  .principle-second{
+    margin-top:54px;padding-top:46px;
+    border-top:1px solid var(--line);
+  }
+  .principle-second .p-label{margin-bottom:18px;}
+  .principle-second q{
+    font-size:clamp(1.5rem,3vw,2.15rem);
+    color:var(--ink);
+  }
+  .principle-second blockquote{padding-top:0;max-width:42ch;}
+  .principle-second blockquote::before{content:none;}
 
   /* ---------- METRICS BANNER ---------- */
   .metrics{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -480,6 +492,14 @@
     margin-top:14px;font-size:.9rem;line-height:1.5;
     font-style:italic;color:var(--ink-soft);
     max-width:62ch;
+  }
+  /* reserved height so swapping caption text never shifts the page */
+  .carousel-caption{
+    min-height:2.7em;          /* ~2 lines desktop */
+    margin-left:auto;margin-right:auto;
+  }
+  @media(max-width:640px){
+    .carousel-caption{min-height:4.2em;}   /* captions wrap longer on mobile */
   }
   .case-caption{margin-bottom:4px;}
   @media(max-width:640px){
@@ -803,6 +823,13 @@
     <blockquote>
       <q>The real problem is rarely the screen — it's the system missing behind it.</q>
     </blockquote>
+    <div class="principle-second">
+      <div class="p-label">A Principle I Carry</div>
+      <blockquote>
+        <q>People don't buy what you do; they buy why you do it.</q>
+        <cite class="p-cite">— Simon Sinek</cite>
+      </blockquote>
+    </div>
   </div>
 </section>
 
