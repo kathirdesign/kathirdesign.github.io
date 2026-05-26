@@ -640,9 +640,9 @@
     display:flex;width:max-content;align-items:center;
     gap:0;
   }
-  .marquee-row.r1{animation:marquee-l 64s linear infinite;}
-  .marquee-row.r2{animation:marquee-r 72s linear infinite;}
-  .marquee-row.r3{animation:marquee-l 80s linear infinite;}
+  .marquee-row.r1{animation:marquee-l 36s linear infinite;}
+  .marquee-row.r2{animation:marquee-r 34s linear infinite;}
+  .marquee-row.r3{animation:marquee-l 42s linear infinite;}
   .m-chip{
     flex:none;
     font-family:'Poppins',sans-serif;
@@ -657,10 +657,10 @@
   }
   @keyframes marquee-l{
     from{transform:translateX(0);}
-    to{transform:translateX(-50%);}
+    to{transform:translateX(-33.333%);}
   }
   @keyframes marquee-r{
-    from{transform:translateX(-50%);}
+    from{transform:translateX(-33.333%);}
     to{transform:translateX(0);}
   }
   @media(prefers-reduced-motion:reduce){
@@ -731,7 +731,7 @@
     <div class="hero-text">
       <div class="hero-intro">
         <p class="hero-greet reveal">Hi, I'm Kathir.</p>
-        <p class="hero-typed reveal">Teams call me <span class="typed" aria-label="a Product Designer, Product Thinker, Strategist, Problem Solver, Team Enabler, and UX Mentor"><span class="typed-text" aria-hidden="true"></span><span class="typed-caret" aria-hidden="true"></span></span></p>
+        <p class="hero-typed reveal">Teams call me <span class="typed" aria-label="a Product Designer, Product Thinker, Strategist, Problem Solver, Team Enabler, UX Mentor, and Force Multiplier"><span class="typed-text" aria-hidden="true"></span><span class="typed-caret" aria-hidden="true"></span></span></p>
       </div>
       <div class="hero-body">
         <div class="eyebrow reveal">Senior Product Designer</div>
@@ -761,28 +761,29 @@
 <section class="metrics" aria-label="Key metrics">
   <div class="metrics-grid">
     <div class="metric">
-      <div class="m-num" data-target="8" data-suffix="+">0</div>
+      <div class="m-num" data-target="8" data-suffix="+">8<span class="m-suffix">+</span></div>
       <div class="m-label">Years of experience</div>
     </div>
-    <!-- Verticals: 5 — matches the five named verticals in the AssetiQ case study. -->
+    <!-- 7+: 5 AssetiQ verticals (LiftiQ, ReeferiQ, CloudiQ, TankiQ, FlowiQ)
+         + TGSIN Smart Factory + Blue Bird fleet portal. Must be listable in interviews. -->
     <div class="metric">
-      <div class="m-num" data-target="5">0</div>
-      <div class="m-label">Verticals, one admin core</div>
+      <div class="m-num" data-target="7" data-suffix="+">7<span class="m-suffix">+</span></div>
+      <div class="m-label">Enterprise products designed</div>
     </div>
     <div class="metric">
-      <div class="m-num" data-target="95" data-suffix="%">0</div>
+      <div class="m-num" data-target="95" data-suffix="%">95<span class="m-suffix">%</span></div>
       <div class="m-label">Easier onboarding</div>
     </div>
     <div class="metric">
-      <div class="m-num" data-target="60" data-suffix="%">0</div>
+      <div class="m-num" data-target="60" data-suffix="%">60<span class="m-suffix">%</span></div>
       <div class="m-label">Faster configuration</div>
     </div>
     <div class="metric">
-      <div class="m-num" data-target="3" data-suffix="x">0</div>
+      <div class="m-num" data-target="3" data-suffix="x">3<span class="m-suffix">x</span></div>
       <div class="m-label">ARR growth at AssetiQ</div>
     </div>
     <div class="metric">
-      <div class="m-num" data-target="75" data-suffix="%">0</div>
+      <div class="m-num" data-target="75" data-suffix="%">75<span class="m-suffix">%</span></div>
       <div class="m-label">Fewer support tickets</div>
     </div>
   </div>
@@ -809,7 +810,7 @@
       </div>
       <div class="about-body reveal">
         <p>I spent eight years turning complex industrial IoT platforms into interfaces that field workers, operators, and enterprise teams can use without a manual. My background in Electrical &amp; Electronics Engineering means I don't need the domain explained — I design from inside it.</p>
-        <p>Most recently I was the sole product designer on AssetiQ, a multi-tenant IoT SaaS platform spanning five industrial verticals, with enterprise end customers including Arkema, Fujifilm and ChampionX. I owned every design decision end to end: research, interaction, interface, and the handoff that engineering builds from.</p>
+        <p>Most recently I was the sole product designer on AssetiQ, a multi-tenant IoT SaaS platform spanning five industrial verticals, with enterprise customers across chemicals, manufacturing, energy and water utilities. I owned every design decision end to end: research, interaction, interface, and the handoff that engineering builds from.</p>
         <p>I'm not a stage in the product process. I'm the spine that runs through it.</p>
       </div>
     </div>
@@ -1185,7 +1186,6 @@
           <span>User Research</span>
           <span>Jobs-to-be-Done</span>
           <span>User Personas</span>
-          <span>Requirement Analysis</span>
           <span>Functional Analysis</span>
           <span>Product Strategy</span>
           <span>Design Strategy</span>
@@ -1214,7 +1214,6 @@
           <span>Enterprise Software</span>
           <span>Industrial IoT</span>
           <span>RBAC &amp; ABAC Access Control</span>
-          <span>Complex Systems Design</span>
           <span>Platform Design</span>
         </div>
       </div>
@@ -1224,7 +1223,6 @@
         <div class="skill-tags">
           <span>Design Critique</span>
           <span>Usability Testing</span>
-          <span>Comparative Evaluation</span>
           <span>Product Analytics</span>
           <span>Cross-functional Collaboration</span>
           <span>Design Leadership</span>
@@ -1238,8 +1236,6 @@
           <span>Adobe XD</span>
           <span>Whimsical</span>
           <span>Balsamiq</span>
-          <span>InVision</span>
-          <span>Marvel</span>
           <span>Notion</span>
         </div>
       </div>
@@ -1252,6 +1248,7 @@
           <span>Gemini</span>
           <span>Perplexity</span>
           <span>NotebookLM</span>
+          <span>Figma AI</span>
         </div>
       </div>
 
@@ -1260,25 +1257,28 @@
 </section>
 
 <!-- ================= FRAMEWORKS MARQUEE ================= -->
-<!-- DRAFT: 31 frameworks as requested. Recommend curating to ~15-18 you can
-     defend in an interview — every chip here is a claim of applied mastery. -->
+<!-- Curated to 16 design/product-thinking lenses. Framed as "lenses I think
+     through" (not "applied") — honest and interview-defensible. -->
 <section class="marquee-sec" aria-label="Frameworks and thinking">
   <div class="marquee-intro">
     <div class="section-label">Frameworks &amp; Thinking</div>
-    <p>The strategic lenses I bring to the work — applied before, during, and after a product reaches the market.</p>
+    <p>The strategic lenses I think through before a single pixel — how I frame the problem, the product, and the market around it.</p>
   </div>
   <div class="marquee-rows" aria-hidden="true">
     <div class="marquee-row r1">
-      <span class="m-chip">Contrarian Theory</span><span class="m-chip">Branding</span><span class="m-chip">Pricing Strategy</span><span class="m-chip">Color Psychology</span><span class="m-chip">Social Proofing</span><span class="m-chip">SWOT Analysis</span><span class="m-chip">Blue Ocean Methodologies</span><span class="m-chip">USP Analysis</span><span class="m-chip">Thought Leadership</span><span class="m-chip">Cost Leadership</span><span class="m-chip">Differentiation Leadership</span>
-      <span class="m-chip">Contrarian Theory</span><span class="m-chip">Branding</span><span class="m-chip">Pricing Strategy</span><span class="m-chip">Color Psychology</span><span class="m-chip">Social Proofing</span><span class="m-chip">SWOT Analysis</span><span class="m-chip">Blue Ocean Methodologies</span><span class="m-chip">USP Analysis</span><span class="m-chip">Thought Leadership</span><span class="m-chip">Cost Leadership</span><span class="m-chip">Differentiation Leadership</span>
+      <span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Atomic Design</span><span class="m-chip">Design Thinking &amp; Double Diamond</span><span class="m-chip">Systems Thinking</span><span class="m-chip">Heuristic Evaluation</span>
+      <span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Atomic Design</span><span class="m-chip">Design Thinking &amp; Double Diamond</span><span class="m-chip">Systems Thinking</span><span class="m-chip">Heuristic Evaluation</span>
+      <span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Atomic Design</span><span class="m-chip">Design Thinking &amp; Double Diamond</span><span class="m-chip">Systems Thinking</span><span class="m-chip">Heuristic Evaluation</span>
     </div>
     <div class="marquee-row r2">
-      <span class="m-chip">Inbound Marketing</span><span class="m-chip">Value Proposition</span><span class="m-chip">Value Innovation</span><span class="m-chip">Network Effect</span><span class="m-chip">BCG Matrix</span><span class="m-chip">Kano Model</span><span class="m-chip">Domino Effect</span><span class="m-chip">Leapfrogging</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Second-Order Thinking</span>
-      <span class="m-chip">Inbound Marketing</span><span class="m-chip">Value Proposition</span><span class="m-chip">Value Innovation</span><span class="m-chip">Network Effect</span><span class="m-chip">BCG Matrix</span><span class="m-chip">Kano Model</span><span class="m-chip">Domino Effect</span><span class="m-chip">Leapfrogging</span><span class="m-chip">First Principles Thinking</span><span class="m-chip">Second-Order Thinking</span>
+      <span class="m-chip">Second-Order Thinking</span><span class="m-chip">Blue Ocean Strategy</span><span class="m-chip">Kano Model</span><span class="m-chip">Network Effects</span><span class="m-chip">Value Proposition Design</span>
+      <span class="m-chip">Second-Order Thinking</span><span class="m-chip">Blue Ocean Strategy</span><span class="m-chip">Kano Model</span><span class="m-chip">Network Effects</span><span class="m-chip">Value Proposition Design</span>
+      <span class="m-chip">Second-Order Thinking</span><span class="m-chip">Blue Ocean Strategy</span><span class="m-chip">Kano Model</span><span class="m-chip">Network Effects</span><span class="m-chip">Value Proposition Design</span>
     </div>
     <div class="marquee-row r3">
-      <span class="m-chip">Pareto Principle</span><span class="m-chip">Start With Why</span><span class="m-chip">Radical Candor</span><span class="m-chip">Atomic Design</span><span class="m-chip">Buyer Personas</span><span class="m-chip">Category Creation</span><span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">Blitzscaling</span><span class="m-chip">Nail It, Scale It</span><span class="m-chip">McKinsey 7S Model</span>
-      <span class="m-chip">Pareto Principle</span><span class="m-chip">Start With Why</span><span class="m-chip">Radical Candor</span><span class="m-chip">Atomic Design</span><span class="m-chip">Buyer Personas</span><span class="m-chip">Category Creation</span><span class="m-chip">Jobs-to-be-Done</span><span class="m-chip">Blitzscaling</span><span class="m-chip">Nail It, Scale It</span><span class="m-chip">McKinsey 7S Model</span>
+      <span class="m-chip">Start With Why</span><span class="m-chip">Crossing the Chasm</span><span class="m-chip">Convention over Configuration</span><span class="m-chip">Mobile Is Not Smaller Web</span><span class="m-chip">Simplicity as the Hard Outcome</span>
+      <span class="m-chip">Start With Why</span><span class="m-chip">Crossing the Chasm</span><span class="m-chip">Convention over Configuration</span><span class="m-chip">Mobile Is Not Smaller Web</span><span class="m-chip">Simplicity as the Hard Outcome</span>
+      <span class="m-chip">Start With Why</span><span class="m-chip">Crossing the Chasm</span><span class="m-chip">Convention over Configuration</span><span class="m-chip">Mobile Is Not Smaller Web</span><span class="m-chip">Simplicity as the Hard Outcome</span>
     </div>
   </div>
 </section>
@@ -1355,7 +1355,7 @@
     const wrap=document.querySelector('.typed-text');
     if(!wrap)return;
     const phrases=["Product Designer","Product Thinker","Strategist",
-                   "Problem Solver","Team Enabler","UX Mentor"];
+                   "Problem Solver","Team Enabler","UX Mentor","Force Multiplier"];
     const caret=document.querySelector('.typed-caret');
     const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
     if(reduce){
@@ -1495,15 +1495,16 @@
     });
   })();
 
-  // metrics count-up — fires when banner scrolls into view
+  // metrics count-up — real numbers render in HTML; JS resets then animates
   (function(){
     const nums=document.querySelectorAll('.m-num');
     if(!nums.length)return;
     const reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    // reduced-motion: leave the real numbers exactly as they are in the HTML
+    if(reduce)return;
     const run=(el)=>{
       const target=parseInt(el.dataset.target,10);
       const suffix=el.dataset.suffix||'';
-      if(reduce){el.innerHTML=target+(suffix?'<span class="m-suffix">'+suffix+'</span>':'');return;}
       const dur=1400;const start=performance.now();
       const tick=(now)=>{
         const p=Math.min((now-start)/dur,1);
