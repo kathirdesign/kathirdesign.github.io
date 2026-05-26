@@ -22,6 +22,11 @@
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html{scroll-behavior:smooth;}
+  /* offset jump targets so they land clear of the sticky nav */
+  section[id], [id="main"]{scroll-margin-top:84px;}
+  @media(max-width:640px){
+    section[id], [id="main"]{scroll-margin-top:72px;}
+  }
   body{
     background:var(--paper);
     color:var(--ink);
@@ -555,25 +560,49 @@
     display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
     background:var(--line);border:1px solid var(--line);
   }
-  @media(max-width:860px){.work-grid{grid-template-columns:1fr 1fr;}}
-  @media(max-width:560px){.work-grid{grid-template-columns:1fr;}}
+  @media(max-width:860px){
+    .work-grid{grid-template-columns:1fr 1fr;}
+    /* if the last card is alone on its row (odd count), span both columns */
+    .work-item:last-child:nth-child(odd){grid-column:1 / -1;}
+  }
+  @media(max-width:560px){
+    .work-grid{grid-template-columns:1fr;}
+    .work-item:last-child:nth-child(odd){grid-column:auto;}
+  }
   .work-item{
     background:var(--paper);padding:30px 26px;
     display:flex;flex-direction:column;gap:9px;
-    transition:background .2s;
+    transition:background .2s;position:relative;
   }
   .work-item:hover{background:var(--paper-2);}
+  .work-item .wi-icon{
+    position:absolute;top:24px;right:24px;
+    width:24px;height:24px;
+  }
+  .work-item .wi-icon svg{
+    width:100%;height:100%;stroke:var(--rotate-accent);
+  }
   .work-item .wi-tag{
     font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
     color:var(--rotate-accent);font-weight:500;
+    padding-right:36px;
   }
   .work-item h3{
     font-family:'Lora',serif;font-size:1.16rem;font-weight:500;
-    color:var(--ink);line-height:1.3;
+    color:var(--ink);line-height:1.3;padding-right:36px;
   }
   .work-item p{
     font-family:'Lora',serif;font-style:italic;
     font-size:.92rem;color:var(--ink-soft);line-height:1.5;
+  }
+  .work-item .wi-caps{
+    display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;
+  }
+  .work-item .wi-caps span{
+    font-size:.71rem;letter-spacing:.02em;color:var(--rotate-accent);
+    font-weight:500;
+    border:1px solid var(--rotate-accent);border-radius:3px;
+    padding:3px 9px;background:transparent;
   }
 
   /* ---------- SKILLS ---------- */
@@ -865,10 +894,10 @@
     <div class="carousel" data-carousel>
       <div class="carousel-stage">
         <div class="carousel-viewport">
-          <div class="carousel-slide active"><img loading="lazy" decoding="async" src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1"></div>
-          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2"></div>
-          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3"></div>
-          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4"></div>
+          <div class="carousel-slide active"><img decoding="async" src="assetiq-context-1.png" alt="AssetiQ Administration — platform overview, view 1"></div>
+          <div class="carousel-slide"><img decoding="async" src="assetiq-context-2.png" alt="AssetiQ Administration — platform overview, view 2"></div>
+          <div class="carousel-slide"><img decoding="async" src="assetiq-context-3.png" alt="AssetiQ Administration — platform overview, view 3"></div>
+          <div class="carousel-slide"><img decoding="async" src="assetiq-context-4.png" alt="AssetiQ Administration — platform overview, view 4"></div>
         </div>
         <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -909,8 +938,8 @@
     <div class="carousel" data-carousel>
       <div class="carousel-stage">
         <div class="carousel-viewport">
-          <div class="carousel-slide active"><img loading="lazy" decoding="async" src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1"></div>
-          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2"></div>
+          <div class="carousel-slide active"><img decoding="async" src="assetiq-wireframes-1.png" alt="AssetiQ Administration — wireframes and process, view 1"></div>
+          <div class="carousel-slide"><img decoding="async" src="assetiq-wireframes-2.png" alt="AssetiQ Administration — wireframes and process, view 2"></div>
         </div>
         <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -941,8 +970,8 @@
     <div class="carousel" data-carousel>
       <div class="carousel-stage">
         <div class="carousel-viewport">
-          <div class="carousel-slide active"><img loading="lazy" decoding="async" src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1"></div>
-          <div class="carousel-slide"><img loading="lazy" decoding="async" src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2"></div>
+          <div class="carousel-slide active"><img decoding="async" src="assetiq-final-1.png" alt="AssetiQ Administration — final designs, view 1"></div>
+          <div class="carousel-slide"><img decoding="async" src="assetiq-final-2.png" alt="AssetiQ Administration — final designs, view 2"></div>
         </div>
         <button class="carousel-arrow prev" type="button" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
         <button class="carousel-arrow next" type="button" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -983,7 +1012,7 @@
     </div>
 
     <div class="reveal">
-      <img loading="lazy" decoding="async" src="geist-components.png" alt="Geist — component library overview" class="case-img">
+      <img decoding="async" src="geist-components.png" alt="Geist — component library overview" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -1008,7 +1037,7 @@
     </div>
 
     <div class="reveal">
-      <img loading="lazy" decoding="async" src="geist-library.png" alt="Geist — Figma library structure and component anatomy" class="case-img">
+      <img decoding="async" src="geist-library.png" alt="Geist — Figma library structure and component anatomy" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -1020,7 +1049,7 @@
     </div>
 
     <div class="reveal">
-      <img loading="lazy" decoding="async" src="geist-production.png" alt="Geist components live in the CloudiQ production app" class="case-img">
+      <img decoding="async" src="geist-production.png" alt="Geist components live in the CloudiQ production app" class="case-img">
     </div>
 
     <div class="case-block reveal">
@@ -1040,49 +1069,85 @@
     <p class="reveal" style="color:var(--ink-soft);max-width:58ch;margin-bottom:40px;">Beyond the two deep-dives above — selected projects from eight years across platform design, design systems, and product strategy.</p>
     <div class="work-grid reveal">
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
         <div class="wi-tag">Hash8 · AssetiQ</div>
         <h3>Cross-Organization Asset Sharing</h3>
         <p>Trust, scoped and revocable — collaboration without compromising control.</p>
+        <div class="wi-caps">
+          <span>Scoped permissions</span><span>View-only access</span><span>Vendor collaboration</span><span>Event-driven alerts</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></div>
         <div class="wi-tag">Hash8 · AssetiQ</div>
         <h3>Map Tracking &amp; Geofence Management</h3>
         <p>Where location becomes logic — boundaries drawn, dropped, or defined.</p>
+        <div class="wi-caps">
+          <span>Circular &amp; polygonal zones</span><span>Point-anchored boundaries</span><span>Theft prevention</span><span>Operational zoning</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg></div>
         <div class="wi-tag">Hash8 · AssetiQ</div>
         <h3>Platform Application Dashboards</h3>
         <p>Signal over noise — decisions surfaced the moment you land.</p>
+        <div class="wi-caps">
+          <span>Single-pane-of-glass</span><span>KPI &amp; alert insights</span><span>Asset health</span><span>Trend analytics</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg></div>
         <div class="wi-tag">Hash8 · AssetiQ</div>
         <h3>Digital Twin Framework</h3>
         <p>Mirror the field. Master the outcome — before reality forces the decision.</p>
+        <div class="wi-caps">
+          <span>Command &amp; control</span><span>Visual simulation</span><span>Time-lapse replay</span><span>Predictive maintenance</span><span>Incident detection</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div>
         <div class="wi-tag">Hash8 · AssetiQ</div>
         <h3>Intelligent Notification System</h3>
         <p>More signal. Less noise. Right audience — every alert, earned.</p>
+        <div class="wi-caps">
+          <span>Escalation hierarchies</span><span>Role &amp; shift routing</span><span>Throttling &amp; bundling</span><span>Alert-fatigue analytics</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
         <div class="wi-tag">Hash8 · AssetiQ</div>
         <h3>Platform-Wide Supporting Features</h3>
         <p>The quiet surfaces that make a platform feel alive.</p>
+        <div class="wi-caps">
+          <span>Live map tracking</span><span>Configurable grid reports</span><span>Analytics &amp; leaderboards</span><span>Auth flows</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20V9l-6 4V9l-6 4V4H4v16Z"/><path d="M7 20v-4M12 20v-4M17 20v-4"/></svg></div>
         <div class="wi-tag">Hash8 · TGSIN</div>
         <h3>Smart Factory Operations Platform</h3>
         <p>The factory, made legible — from blueprint to bottleneck.</p>
+        <div class="wi-caps">
+          <span>Plant digital twins</span><span>4M analysis</span><span>OEE / APQ analytics</span><span>Energy management</span><span>Workforce planning</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v11"/><path d="M3 17h18M3 11h18"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/></svg></div>
         <div class="wi-tag">Teezle</div>
         <h3>Blue Bird School Bus Management Portal</h3>
         <p>Mission-critical fleets, made manageable — for the operators behind the wheel.</p>
+        <div class="wi-caps">
+          <span>Fleet administration</span><span>Role-based access</span><span>Real-time tracking</span><span>Maintenance workflows</span>
+        </div>
       </article>
       <article class="work-item">
+        <div class="wi-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
         <div class="wi-tag">Hash8</div>
         <h3>Product Design Mentorship &amp; Team Enablement</h3>
         <p>Building product thinkers — not just product doers.</p>
+        <div class="wi-caps">
+          <span>Full product lifecycle</span><span>Customer discovery</span><span>First-principles thinking</span><span>Design judgment</span>
+        </div>
       </article>
     </div>
   </div>
@@ -1185,6 +1250,7 @@
           <span>Claude</span>
           <span>ChatGPT</span>
           <span>Gemini</span>
+          <span>Perplexity</span>
           <span>NotebookLM</span>
         </div>
       </div>
