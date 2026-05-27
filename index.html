@@ -4,7 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kathir S — Senior Product Designer</title>
-<meta name="description" content="Kathir S — Senior Product Designer. Turning complex industrial IoT systems into interfaces people can actually use.">
+<meta name="description" content="Kathir S — Senior Product Designer. 8+ years designing complex enterprise SaaS, industrial IoT, and design systems.">
+
+<!-- Favicon — SVG mark -->
+<link rel="icon" type="image/svg+xml" href="kathir-logo.svg">
+
+<!-- Open Graph (WhatsApp, LinkedIn, Facebook link previews) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kathirdesign.github.io/">
+<meta property="og:title" content="Kathir S — Senior Product Designer">
+<meta property="og:description" content="8+ years designing complex enterprise SaaS, industrial IoT, and design systems. Sole product designer on AssetiQ; architect of the Geist mobile design system.">
+<meta property="og:image" content="https://kathirdesign.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kathir S — Senior Product Designer">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kathir S — Senior Product Designer">
+<meta name="twitter:description" content="8+ years designing complex enterprise SaaS, industrial IoT, and design systems.">
+<meta name="twitter:image" content="https://kathirdesign.github.io/og-image.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Poppins:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
@@ -46,8 +66,10 @@
     border-bottom:1px solid var(--line);
   }
   .nav-inner{display:flex;justify-content:space-between;align-items:center;height:68px;}
-  .logo{font-family:'Lora',serif;font-weight:600;font-size:1.05rem;letter-spacing:.02em;
-    color:var(--ink);text-decoration:none;transition:opacity .2s;}
+  .logo{display:inline-flex;align-items:center;
+    color:var(--ink);text-decoration:none;transition:opacity .2s;
+    line-height:0;}
+  .logo svg{height:30px;width:auto;display:block;}
   .logo:hover{opacity:.65;}
   .nav-links{display:flex;gap:30px;}
   .nav-links a{
@@ -729,7 +751,19 @@
 
 <nav>
   <div class="wrap nav-inner">
-    <a class="logo" href="#main" aria-label="Kathir S — back to top">Kathir&nbsp;S</a>
+    <a class="logo" href="#main" aria-label="Kathir S — back to top">
+      <svg viewBox="0 0 100 100" aria-hidden="true" fill="currentColor" stroke="currentColor">
+        <rect x="22" y="12" width="9" height="76"/>
+        <line x1="26.5" y1="50" x2="67.37" y2="13.20" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="73.14" y2="20.85" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="77.50" y2="29.40" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="80.30" y2="38.56" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="80.30" y2="61.44" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="77.50" y2="70.60" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="73.14" y2="79.15" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="26.5" y1="50" x2="67.37" y2="86.80" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+    </a>
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#work">Work</a>
