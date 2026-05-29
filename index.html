@@ -70,7 +70,11 @@
     color:var(--ink);text-decoration:none;transition:opacity .2s;
     line-height:0;}
   .logo svg{height:30px;width:auto;display:block;}
-  .logo:hover{opacity:.65;}
+  /* hover only on devices that can actually hover — prevents
+     the dulled state from sticking after a tap on touch screens */
+  @media (hover: hover){
+    .logo:hover{opacity:.65;}
+  }
   .nav-links{display:flex;gap:30px;}
   .nav-links a{
     text-decoration:none;color:var(--ink-soft);font-size:.82rem;
