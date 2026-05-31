@@ -70,6 +70,26 @@
     color:var(--ink);text-decoration:none;transition:opacity .2s;
     line-height:0;}
   .logo svg{height:30px;width:auto;display:block;}
+  /* click-triggered cascade sweep through the logo rays.
+     .animate class is added on click, removed when the run ends. */
+  .logo .lray{transform-box:fill-box;transform-origin:left center;}
+  .logo.animate .lray{animation:logo-sweep .62s ease-out both;}
+  .logo.animate .l1{animation-delay:0s;}
+  .logo.animate .l2{animation-delay:.05s;}
+  .logo.animate .l3{animation-delay:.10s;}
+  .logo.animate .l4{animation-delay:.15s;}
+  .logo.animate .l5{animation-delay:.20s;}
+  .logo.animate .l6{animation-delay:.25s;}
+  .logo.animate .l7{animation-delay:.30s;}
+  .logo.animate .l8{animation-delay:.35s;}
+  @keyframes logo-sweep{
+    0%{opacity:1;transform:scaleX(1);}
+    35%{opacity:.15;transform:scaleX(.55);}
+    100%{opacity:1;transform:scaleX(1);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .logo.animate .lray{animation:none;}
+  }
   /* hover only on devices that can actually hover — prevents
      the dulled state from sticking after a tap on touch screens */
   @media (hover: hover){
@@ -796,14 +816,14 @@
     <a class="logo" href="#main" aria-label="Kathir S — back to top">
       <svg viewBox="0 0 100 100" aria-hidden="true" fill="currentColor" stroke="currentColor">
         <rect x="22" y="12" width="9" height="76"/>
-        <line x1="26.5" y1="50" x2="67.37" y2="13.20" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="73.14" y2="20.85" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="77.50" y2="29.40" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="80.30" y2="38.56" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="80.30" y2="61.44" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="77.50" y2="70.60" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="73.14" y2="79.15" stroke-width="3.4" stroke-linecap="round"/>
-        <line x1="26.5" y1="50" x2="67.37" y2="86.80" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l1" x1="26.5" y1="50" x2="67.37" y2="13.20" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l2" x1="26.5" y1="50" x2="73.14" y2="20.85" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l3" x1="26.5" y1="50" x2="77.50" y2="29.40" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l4" x1="26.5" y1="50" x2="80.30" y2="38.56" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l5" x1="26.5" y1="50" x2="80.30" y2="61.44" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l6" x1="26.5" y1="50" x2="77.50" y2="70.60" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l7" x1="26.5" y1="50" x2="73.14" y2="79.15" stroke-width="3.4" stroke-linecap="round"/>
+        <line class="lray l8" x1="26.5" y1="50" x2="67.37" y2="86.80" stroke-width="3.4" stroke-linecap="round"/>
       </svg>
     </a>
     <div class="nav-links">
@@ -1532,6 +1552,20 @@
     // close on Escape
     document.addEventListener('keydown',e=>{
       if(e.key==='Escape'&&menu.classList.contains('open'))setOpen(false);
+    });
+  })();
+
+  // logo click → play the cascade-ray sweep once, then reset.
+  // Re-triggers on every click. Doesn't block the scroll-to-top link.
+  (function(){
+    const logo=document.querySelector('.logo');
+    if(!logo)return;
+    logo.addEventListener('click',()=>{
+      logo.classList.remove('animate');
+      void logo.offsetWidth;            // force reflow so it restarts every click
+      logo.classList.add('animate');
+      clearTimeout(logo._sweep);
+      logo._sweep=setTimeout(()=>logo.classList.remove('animate'),1100);
     });
   })();
 
